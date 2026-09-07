@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فحص إعدادات Firebase - منظومة الإرشاد الأكاديمي</title>
+<style>
+  :root { --primary:#0b2545; --ok:#10b981; --bad:#ef4444; --warn:#f59e0b; --border:#cbd5e1; }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,'Segoe UI',Tahoma,sans-serif;}
+  body{background:#f1f5f9;color:#1e293b;padding:16px;line-height:1.6;font-size:14px;}
+  .wrap{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
+  header{background:linear-gradient(135deg,#07192f,#134074);color:#fff;padding:18px;border-radius:14px;}
+  header h1{font-size:17px;font-weight:900;}
+  header p{font-size:12px;color:#cbd5e1;margin-top:4px;}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;}
+  .card h2{font-size:14px;font-weight:800;color:var(--primary);border-bottom:1px solid #f1f5f9;padding-bottom:8px;}
+  .row{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0;}
+  .row .ic{flex:none;font-size:15px;line-height:1.4;}
+  .row .tx{flex:1;font-size:12.5px;}
+  .row .tx b{display:block;font-size:13px;}
+  .row .tx span{color:#475569;font-size:11.5px;}
+  .pass{background:#f0fdf4;border-color:#bbf7d0;}
+  .fail{background:#fef2f2;border-color:#fecaca;}
+  .warn{background:#fffbeb;border-color:#fde68a;}
+  .btn{padding:11px 16px;border-radius:10px;border:none;font-weight:800;font-size:13px;cursor:pointer;min-height:44px;}
+  .btn-p{background:var(--primary);color:#fff;} .btn-p:hover{background:#134074;}
+  .btn-s{background:#e2e8f0;color:#334155;}
+  input{padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:16px;width:100%;}
+  label{font-size:11.5px;font-weight:700;color:#334155;display:block;margin-bottom:3px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr;}}
+  code{background:#0f172a;color:#e2e8f0;padding:1px 6px;border-radius:5px;font-size:11.5px;font-family:monospace;direction:ltr;display:inline-block;}
+  .fixbox{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px;font-size:12px;color:#1e3a8a;}
+  .muted{font-size:11px;color:#64748b;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🔎 فحص إعدادات Firebase Authentication</h1>
+    <p>أداة تشخيص لمنظومة الإرشاد الأكاديمي — مشروع advising-uot</p>
+  </header>
+
+  <div class="card">
+    <h2>1) الفحص التلقائي (يبدأ فوراً)</h2>
+    <div id="autoResults" style="display:flex;flex-direction:column;gap:7px;"></div>
+  </div>
+
+  <div class="card">
+    <h2>2) اختبار تسجيل الدخول الحقيقي</h2>
+    <p class="muted">أدخل حساب مشرف أنشأته من Authentication ← Users. لا تُحفظ البيانات في أي مكان.</p>
+    <div class="grid2">
+      <div><label>البريد الإلكتروني</label><input type="email" id="em" placeholder="advisor@uot.edu.ly" autocomplete="username"></div>
+      <div><label>كلمة المرور</label><input type="password" id="pw" placeholder="••••••••" autocomplete="current-password"></div>
+    </div>
+    <button class="btn btn-p" onclick="runLoginTest()">▶ تشغيل الاختبار الكامل</button>
+    <div id="loginResults" style="display:flex;flex-direction:column;gap:7px;"></div>
+  </div>
+
+  <div class="card">
+    <h2>3) ملخص الإجراءات المطلوبة</h2>
+    <div id="summary" class="muted">شغّل الاختبار أعلاه لعرض الملخص.</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAp1-K3x1FG9w_cugTIOFj3Ht0yCGyVr1o",
+  authDomain: "advising-uot.firebaseapp.com",
+  projectId: "advising-uot",
+  storageBucket: "advising-uot.firebasestorage.app",
+  messagingSenderId: "962684741457",
+  appId: "1:962684741457:web:98dadf676f8d8de7291570",
+  measurementId: "G-LWP0GLKJ40"
+};
+
+const todo = [];
+function line(box, state, title, detail, fix) {
+  const d = document.createElement('div');
+  d.className = 'row ' + (state === 'pass' ? 'pass' : state === 'fail' ? 'fail' : 'warn');
+  d.innerHTML = '<span class="ic">' + (state==='pass'?'✅':state==='fail'?'⛔':'⚠️') + '</span>' +
+    '<span class="tx"><b>' + title + '</b><span>' + (detail||'') + '</span></span>';
+  document.getElementById(box).appendChild(d);
+  if (fix) todo.push(fix);
+}
+
+/* ---------- 1) الفحص التلقائي ---------- */
+function autoChecks() {
+  const c = firebaseConfig;
+  const okKey = /^AIza[0-9A-Za-z_-]{35}$/.test(c.apiKey);
+  line('autoResults', okKey?'pass':'fail', 'صيغة مفتاح API', okKey ? 'المفتاح بالصيغة الصحيحة.' : 'المفتاح غير صالح.',
+       okKey?null:'أعد نسخ firebaseConfig من Project settings.');
+
+  const okDom = c.authDomain === c.projectId + '.firebaseapp.com';
+  line('autoResults', okDom?'pass':'fail', 'تطابق authDomain مع المشروع', c.authDomain,
+       okDom?null:'authDomain لا يطابق projectId.');
+
+  const okApp = c.appId.split(':')[1] === c.messagingSenderId && c.appId.split(':')[2] === 'web';
+  line('autoResults', okApp?'pass':'fail', 'معرّف التطبيق (نوع ويب)', okApp ? 'appId مرتبط بنفس المشروع ونوعه web.' : 'appId غير متسق.');
+
+  const host = location.hostname;
+  const isLocal = ['localhost','127.0.0.1',''].includes(host);
+  const isFile = location.protocol === 'file:';
+  if (isFile) {
+    line('autoResults','warn','طريقة الفتح','فتحت الملف مباشرة (file://). قد يفشل تسجيل الدخول.',
+      'ارفع الملف على GitHub Pages أو شغّله عبر خادم محلي.');
+  } else if (isLocal) {
+    line('autoResults','pass','النطاق الحالي', host + ' — مصرّح به تلقائياً في Firebase.');
+  } else {
+    line('autoResults','warn','النطاق الحالي', host + ' — تأكد من إضافته في Authorized domains.',
+      'Authentication ← Settings ← Authorized domains ← أضف: ' + host);
+  }
+
+  const sdk = typeof firebase !== 'undefined' && firebase.auth && firebase.firestore;
+  line('autoResults', sdk?'pass':'fail', 'تحميل مكتبات Firebase', sdk ? 'SDK v10.12.2 محمّلة بنجاح.' : 'فشل تحميل المكتبات — تحقق من الإنترنت.',
+       sdk?null:'تعذر تحميل SDK من gstatic.com.');
+}
+
+let auth, db;
+try {
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  db = firebase.firestore();
+  autoChecks();
+  line('autoResults','pass','تهيئة مشروع Firebase','تم الاتصال بمشروع: ' + firebaseConfig.projectId);
+} catch (e) {
+  line('autoResults','fail','تهيئة مشروع Firebase', e.message);
+}
+
+/* ---------- 2) الاختبار الحقيقي ---------- */
+const AUTH_ERRORS = {
+  'auth/operation-not-allowed': ['طريقة Email/Password غير مفعّلة في المشروع.','Authentication ← Sign-in method ← Email/Password ← Enable'],
+  'auth/unauthorized-domain':   ['نطاق الموقع غير مصرّح به.','Authentication ← Settings ← Authorized domains ← أضف ' + location.hostname],
+  'auth/invalid-credential':    ['البريد أو كلمة المرور غير صحيحة.','تأكد من الحساب في Authentication ← Users'],
+  'auth/wrong-password':        ['كلمة المرور غير صحيحة.','أعد ضبطها من Authentication ← Users'],
+  'auth/user-not-found':        ['لا يوجد حساب بهذا البريد.','Authentication ← Users ← Add user'],
+  'auth/invalid-email':         ['صيغة البريد غير صحيحة.',null],
+  'auth/user-disabled':         ['الحساب معطّل.','فعّله من Authentication ← Users'],
+  'auth/network-request-failed':['تعذر الاتصال بالشبكة.','تحقق من الإنترنت أو حظر المتصفح.'],
+  'auth/too-many-requests':     ['محاولات كثيرة، الحساب موقوف مؤقتاً.','انتظر عدة دقائق.'],
+  'auth/api-key-not-valid':     ['مفتاح API غير صالح.','أعد نسخ firebaseConfig.']
+};
+
+async function runLoginTest() {
+  document.getElementById('loginResults').innerHTML = '';
+  document.getElementById('summary').innerHTML = '';
+  todo.length = 0;
+  const email = document.getElementById('em').value.trim();
+  const pass = document.getElementById('pw').value;
+  if (!email || !pass) { line('loginResults','fail','بيانات ناقصة','أدخل البريد وكلمة المرور.'); return; }
+
+  let user = null;
+  try {
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    const cred = await auth.signInWithEmailAndPassword(email, pass);
+    user = cred.user;
+    line('loginResults','pass','تسجيل الدخول (Email/Password)','نجح الدخول باسم: ' + user.email);
+    line('loginResults','pass','النطاق مصرّح به','لم يُرفض النطاق ' + location.hostname);
+    line('loginResults', user.emailVerified?'pass':'warn','توثيق البريد',
+      user.emailVerified ? 'البريد موثّق.' : 'البريد غير موثّق — القواعد الجديدة لا تشترط ذلك، لكن القواعد القديمة كانت ترفضه.',
+      user.emailVerified?null:'إن بقيت تستخدم القواعد القديمة، احذف شرط email_verified.');
+    line('loginResults','pass','بقاء الجلسة','مفعّل (LOCAL) — لن تحتاج الدخول كل مرة.');
+  } catch (e) {
+    const info = AUTH_ERRORS[e.code] || [e.message, null];
+    line('loginResults','fail','فشل تسجيل الدخول', '<code>' + e.code + '</code> — ' + info[0], info[1]);
+    showSummary();
+    return;
+  }
+
+  // فحص قواعد Firestore: قراءة
+  try {
+    await db.collection('students').limit(1).get();
+    line('loginResults','pass','قواعد Firestore — القراءة','سُمح بقراءة مجموعة students.');
+  } catch (e) {
+    const isPerm = e.code === 'permission-denied';
+    line('loginResults','fail','قواعد Firestore — القراءة','<code>' + e.code + '</code>',
+      isPerm ? 'القواعد لم تُنشر بعد أو تشترط email_verified. انشر النسخة الجديدة من Firestore ← Rules ← Publish'
+             : 'خطأ غير متوقع: ' + e.message);
+  }
+
+  // فحص القواعد: كتابة مستند اختباري مطابق للنموذج ثم حذفه
+  const testId = '99999999';
+  const doc = { id: 99999999, name: 'طالب اختباري مؤقت للفحص', major:'شعبة الاتصالات',
+    gpa: 3.0, passedHours: 0, level:'المستوى 1', status:'منتظم', advisingNote:'',
+    passedPrereqs: [], passedGrades: {}, customPassedCourses: [], hasDeptApproval:false, registered: [] };
+  try {
+    await db.collection('students').doc(testId).set(doc);
+    line('loginResults','pass','قواعد Firestore — الكتابة','قُبل مستند مطابق لنموذج المنظومة.');
+    await db.collection('students').doc(testId).delete();
+    line('loginResults','pass','تنظيف بيانات الاختبار','حُذف المستند الاختباري بنجاح.');
+  } catch (e) {
+    line('loginResults','fail','قواعد Firestore — الكتابة','<code>' + e.code + '</code>',
+      'راجع قواعد students، أو انشر النسخة الجديدة.');
+  }
+
+  // اختبار الرفض المتوقع: حقل غريب يجب أن يُرفض
+  try {
+    await db.collection('students').doc('99999998').set({ ...doc, id: 99999998, isAdmin: true });
+    line('loginResults','warn','حماية الحقول الغريبة','قُبل حقل isAdmin — القواعد المنشورة غير مشدّدة.',
+      'انشر النسخة الجديدة التي تتضمن hasOnly() لمنع حقن الحقول.');
+    await db.collection('students').doc('99999998').delete();
+  } catch (e) {
+    line('loginResults','pass','حماية الحقول الغريبة','رُفض حقل isAdmin كما هو مطلوب ✔');
+  }
+
+  showSummary();
+}
+
+function showSummary() {
+  const s = document.getElementById('summary');
+  if (!todo.length) {
+    s.innerHTML = '<div class="fixbox" style="background:#f0fdf4;border-color:#bbf7d0;color:#15803d;">' +
+      '<b>🎉 كل الإعدادات سليمة.</b><br>المصادقة تعمل، والقواعد منشورة ومشدّدة. المنظومة جاهزة للاستخدام.</div>';
+    return;
+  }
+  s.innerHTML = '<div class="fixbox"><b>الإجراءات المطلوبة (' + todo.length + '):</b><ol style="margin:8px 22px 0 0;">' +
+    todo.map(t => '<li style="margin-bottom:5px;">' + t + '</li>').join('') + '</ol></div>';
+}
+
+document.getElementById('pw').addEventListener('keydown', e => { if (e.key === 'Enter') runLoginTest(); });
+</script>
+</body>
+</html>

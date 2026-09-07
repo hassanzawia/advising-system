@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منظومة الإرشاد الأكاديمي - كلية الهندسة (جامعة طرابلس)</title>
+  <style>
+    :root { --primary: #0b2545; --primary-light: #134074; --accent: #10b981; --danger: #ef4444; --warning: #f59e0b; --gray-bg: #f1f5f9; --card-bg: #ffffff; --border: #cbd5e1; --text: #1e293b; --text-muted: #64748b; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Cairo', Tahoma, sans-serif; }
+    body { background-color: var(--gray-bg); color: var(--text); padding: 16px; line-height: 1.5; font-size: 13px; }
+    .container { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    .header { background: linear-gradient(135deg, #07192f 0%, #0b2545 50%, #134074 100%); color: #fff; padding: 20px 24px; border-radius: 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; box-shadow: 0 4px 15px rgba(11, 37, 69, 0.15); }
+    .header-title-area { display: flex; align-items: center; gap: 14px; }
+    .header-icon { width: 64px; height: 48px; background: rgba(255,255,255,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); overflow: hidden; }
+    .header-sub { font-size: 11px; color: #94a3b8; font-weight: 600; }
+    .header h1 { font-size: 19px; font-weight: 900; margin: 2px 0; color: #fff; }
+    .header-desc { font-size: 11px; color: #cbd5e1; }
+    .advisor-box { background: rgba(11, 37, 69, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 6px; min-width: 290px; }
+    .advisor-label { font-size: 11px; color: #93c5fd; font-weight: bold; display: flex; align-items: center; justify-content: space-between; }
+    .advisor-controls { display: flex; align-items: center; gap: 4px; }
+    .advisor-select { background: #07192f; color: #fff; border: 1px solid #3b82f6; border-radius: 8px; padding: 6px 10px; font-size: 12px; font-weight: bold; flex: 1; outline: none; }
+    .btn-icon-small { background: #1e3a8a; color: #fff; border: 1px solid #3b82f6; border-radius: 8px; padding: 6px 8px; font-size: 11px; font-weight: bold; cursor: pointer; white-space: nowrap; }
+    .btn-icon-small:hover { background: #2563eb; }
+    .btn-icon-danger { background: #991b1b; border-color: #ef4444; }
+    .policy-strip { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 12px 18px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; font-size: 12px; color: #92400e; }
+    .action-bar { background: var(--card-bg); padding: 12px 18px; border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; border: 1px solid var(--border); }
+    .btn { padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary { background: var(--primary); color: #fff; } .btn-primary:hover { background: var(--primary-light); }
+    .btn-success { background: var(--accent); color: #fff; } .btn-danger { background: var(--danger); color: #fff; }
+    .btn-warning { background: var(--warning); color: #fff; } .btn-secondary { background: #e2e8f0; color: #334155; }
+    .grid { display: grid; grid-template-columns: 340px 1fr; gap: 16px; align-items: start; }
+    @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card-bg); border-radius: 14px; border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; }
+    .card-header h3, .card-header h4 { font-size: 13px; font-weight: 800; color: var(--text); }
+    .student-item { padding: 10px 12px; border-radius: 10px; border: 1px solid #e2e8f0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; transition: 0.15s; }
+    .student-item:hover { background: #f8fafc; border-color: #cbd5e1; }
+    .student-item.active { background: #eff6ff; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); }
+    .badge { display: inline-block; padding: 2px 7px; border-radius: 6px; font-size: 10px; font-weight: 800; }
+    .badge-success { background: #dcfce7; color: #15803d; } .badge-danger { background: #fee2e2; color: #b91c1c; }
+    .badge-warning { background: #fef3c7; color: #b45309; } .badge-info { background: #e0f2fe; color: #0369a1; } .badge-purple { background: #f3e8ff; color: #6b21a8; }
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+    .stat-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 8px 4px; }
+    .stat-label { font-size: 9px; color: var(--text-muted); display: block; }
+    .stat-value { font-size: 13px; font-weight: 900; color: var(--text); }
+    .progress-wrapper { display: flex; flex-direction: column; gap: 4px; }
+    .progress-bar-bg { background: #e2e8f0; border-radius: 999px; height: 10px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; border-radius: 999px; transition: width 0.3s; background: #3b82f6; }
+    .table-container { overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 10px; max-height: 400px; }
+    table { width: 100%; border-collapse: collapse; text-align: right; font-size: 12px; }
+    th { background: #f8fafc; padding: 9px 12px; font-weight: 800; color: #475569; border-bottom: 1px solid #cbd5e1; position: sticky; top: 0; z-index: 10; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px; }
+    .modal-overlay.hidden { display: none; }
+    .modal-content { background: #fff; border-radius: 16px; width: 100%; max-width: 520px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); overflow: hidden; display: flex; flex-direction: column; }
+    .modal-content-large { max-width: 1050px; max-height: 88vh; }
+    .modal-header { background: var(--primary); color: #fff; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+    .modal-header h3 { font-size: 14px; font-weight: 800; color: #fff; }
+    .modal-close { background: none; border: none; color: #cbd5e1; font-size: 20px; cursor: pointer; font-weight: bold; }
+    .modal-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; max-height: calc(85vh - 110px); }
+    .modal-footer { padding: 12px 18px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group label { font-size: 11px; font-weight: 700; color: #334155; }
+    .form-input, .form-select, .form-textarea { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 12px; outline: none; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .policy-text { display: flex; align-items: center; gap: 10px; }
+        .badge-secondary { background: #e2e8f0; color: #334155; }
+    .cloud-bar { display:flex; flex-wrap:wrap; align-items:center; gap:8px; background:#0f172a; color:#e2e8f0; padding:9px 14px; border-radius:12px; font-size:11px; }
+    .cloud-dot { width:9px; height:9px; border-radius:50%; background:#64748b; display:inline-block; flex:none; }
+    .cloud-dot.on { background:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,.25); }
+    .cloud-dot.off { background:#f59e0b; }
+    .cloud-dot.err { background:#ef4444; }
+    .login-card { background:#fff; border-radius:16px; padding:22px; width:100%; max-width:380px; display:flex; flex-direction:column; gap:12px; }
+
+    /* ===== الاستجابة للأجهزة اللوحية والجوال ===== */
+    @media (max-width: 900px) {
+      .advisor-box { min-width: 100%; }
+      .header { flex-direction: column; align-items: stretch; }
+    }
+    @media (max-width: 700px) {
+      body { padding: 8px; font-size: 14px; }
+      .container { gap: 12px; }
+      .header { padding: 14px; border-radius: 12px; }
+      .header h1 { font-size: 16px; }
+      .action-bar { flex-direction: column; align-items: stretch; }
+      .action-bar > div { width: 100%; }
+      .action-bar .btn { flex: 1 1 45%; justify-content: center; }
+      .btn { min-height: 42px; font-size: 13px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-input, .form-select, .form-textarea { font-size: 16px; }
+      .modal-content, .modal-content-large { max-width: 100%; max-height: 94vh; }
+      .modal-body { max-height: calc(94vh - 120px); }
+      .modal-footer { flex-direction: column-reverse; }
+      .modal-footer .btn { width: 100%; justify-content: center; }
+      .table-container { max-height: none; border: none; }
+      /* تحويل الجداول إلى بطاقات على الجوال */
+      .table-container table thead { display: none; }
+      .table-container table, .table-container tbody, .table-container tr, .table-container td { display: block; width: 100%; }
+      .table-container tr { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 10px; background: #fff; overflow: hidden; }
+      .table-container td { display: flex; justify-content: space-between; align-items: center; gap: 12px; text-align: left; border: none; border-bottom: 1px dashed #f1f5f9; padding: 9px 12px; }
+      .table-container td:last-child { border-bottom: none; }
+      .table-container td::before { content: attr(data-label); font-weight: 800; color: #475569; font-size: 11px; text-align: right; flex: none; }
+      .table-container td[colspan] { justify-content: center; }
+      .table-container td[colspan]::before { content: ""; }
+      .stats-row { grid-template-columns: 1fr; }
+      #passedCoursesModal .modal-body input[type="checkbox"] { width: 22px; height: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header class="header">
+      <div class="header-title-area">
+        <div class="header-icon">
+          <!-- شعار EEE الاحترافي -->
+          <svg viewBox="0 0 400 150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="150" fill="#0b2545"/>
+            <path d="M30 40 H110 V95 H150" stroke="#134074" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M370 110 H290 V55 H250" stroke="#134074" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="150" cy="95" r="4" fill="#3b82f6"/>
+            <circle cx="250" cy="55" r="4" fill="#3b82f6"/>
+            <text x="200" y="88" font-family="system-ui, sans-serif" font-weight="900" font-size="62" fill="#ffffff" text-anchor="middle" letter-spacing="10">EEE</text>
+            <path d="M125 112 Q 162 92, 200 112 T 275 112" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="header-sub">جامعة طرابلس - كلية الهندسة</span>
+          <h1>قسم الهندسة الكهربائية والإلكترونية</h1>
+          <p class="header-desc">نظام الإرشاد الأكاديمي والتخزين المحلي الآمن | متطلب التخرج: 154 وحدة</p>
+        </div>
+      </div>
+      
+      <div class="advisor-box">
+        <div class="advisor-label">
+          <span>المشرف الأكاديمي المعتمد:</span>
+          <span id="storageStatusBadge" class="badge badge-success">💾 الحفظ المحلي مفعل</span>
+        </div>
+        <div class="advisor-controls">
+          <select id="advisorSelect" onchange="onAdvisorSelectChange()" class="advisor-select"></select>
+          <button type="button" onclick="openEditAdvisorModal()" class="btn-icon-small" title="تعديل">✏️</button>
+          <button type="button" onclick="openAddAdvisorModal()" class="btn-icon-small" title="إضافة">➕</button>
+          <button type="button" onclick="deleteCurrentAdvisor()" class="btn-icon-small btn-icon-danger" title="حذف">🗑️</button>
+        </div>
+        <div style="display:flex; gap:6px; margin-top:4px;">
+          <select id="semesterSelect" onchange="onSemesterChange()" class="advisor-select" style="font-size:11px; padding:4px;">
+            <option value="خريف">خريف</option>
+            <option value="ربيع">ربيع</option>
+          </select>
+          <select id="acadYearSelect" onchange="onSemesterChange()" class="advisor-select" style="font-size:11px; padding:4px;">
+            <option value="2026-2027" selected>2026/2027</option>
+            <option value="2027-2028">2027/2028</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <div class="cloud-bar">
+      <span id="cloudDot" class="cloud-dot"></span>
+      <strong id="cloudStatusText">الوضع المحلي — لم يتم إعداد Firebase بعد</strong>
+      <span id="cloudUserText" style="color:#94a3b8;"></span>
+      <span style="flex:1;"></span>
+      <button type="button" id="cloudSyncBtn" onclick="cloudForcePush()" class="btn-icon-small" style="display:none;">⬆️ رفع الآن</button>
+      <button type="button" id="cloudLoginBtn" onclick="openLoginModal()" class="btn-icon-small" style="display:none;">🔑 تسجيل الدخول</button>
+      <button type="button" id="cloudLogoutBtn" onclick="cloudSignOut()" class="btn-icon-small btn-icon-danger" style="display:none;">🚪 خروج</button>
+    </div>
+    <div class="policy-strip">
+      <div class="policy-text">
+        <span style="font-size:16px;">⚠️</span>
+        <div><strong>قاعدة الساعات الأسبوعية:</strong> وحدتان تعادل 3 ساعات، 3 وحدات تعادل 4 ساعات، والمقررات العملية 3 ساعات لكل وحدة.</div>
+      </div>
+      <button type="button" onclick="openPolicyModal()" class="btn btn-warning" style="padding:6px 12px; font-size:11px;">عرض السياسة</button>
+    </div>
+
+    <div class="action-bar">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="width:8px; height:8px; background:#10b981; border-radius:50%; display:inline-block;"></span>
+        <strong id="semesterDisplayLabel" style="color:#0f172a; font-size:12px;">الفصل الدراسي: خريف 2026 - 2027 م | الأسبقية الأكاديمية مفعلة</strong>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" onclick="openAddStudentModal()" class="btn btn-primary">➕ إضافة طالب جديد</button>
+        <button type="button" onclick="manualSaveData()" class="btn btn-success">💾 حفظ البيانات</button>
+        <button type="button" onclick="exportStudentsToExcel()" class="btn btn-warning" style="color:#fff;">📊 تصدير إلى Excel</button>
+        <button type="button" onclick="openCourseManagerModal()" class="btn btn-secondary">📚 إدارة الخطة</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card">
+          <div class="card-header">
+            <h3>قائمة الطلاب المحفوظة (<span id="studentsCountSpan">0</span>)</h3>
+            <span class="badge badge-info">محفوظ محلياً</span>
+          </div>
+          <div id="studentsList" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+
+        <div class="card" id="studentDetailCard">
+          <div class="card-header">
+            <h3>الملف الأكاديمي للبطاقة</h3>
+            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+              <button type="button" onclick="openPassedCoursesModal()" class="btn btn-success" style="padding:4px 6px; font-size:10px;" title="إدخال المواد المستوفية والدرجات">📋 الدرجات</button>
+              <button type="button" onclick="openRemainingCoursesModal()" class="btn btn-secondary" style="padding:4px 6px; font-size:10px;" title="عرض المقررات والوحدات المتبقية للتخرج">🔍 المتبقية</button>
+              <button type="button" onclick="openEditCurrentStudentModal()" class="btn btn-warning" style="padding:4px 6px; font-size:10px;">✏️ تعديل</button>
+              <button type="button" onclick="deleteCurrentStudent()" class="btn btn-danger" style="padding:4px 6px; font-size:10px;">🗑️ حذف</button>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-box"><span class="stat-label">المعدل (GPA)</span><span class="stat-value" id="cardGpa">--</span></div>
+            <div class="stat-box"><span class="stat-label">الوحدات السابقة</span><span class="stat-value" id="cardPassedHours">--</span></div>
+            <div class="stat-box"><span class="stat-label">المستوى</span><span class="stat-value" id="cardLevel" style="color:#1d4ed8;">--</span></div>
+          </div>
+
+          <div style="background:#eef2ff; border:1px solid #c7d2fe; padding:10px; border-radius:10px; display:flex; flex-direction:column; gap:6px;">
+            <div style="display:flex; justify-content:space-between; font-weight:800; font-size:11px; color:#312e81;">
+              <span>التقدم نحو التخرج (154 وحدة):</span><span id="gradPercentText">0%</span>
+            </div>
+            <div class="progress-bar-bg" style="height:8px;"><div id="gradProgressBar" class="progress-bar-fill" style="background:#4338ca; width:0%;"></div></div>
+            <div style="display:flex; justify-content:space-between; font-size:10px; color:#475569; font-weight:600;">
+              <span>المجموع: <strong id="totalProgressUnits" style="color:#0f172a;">0</strong> و</span>
+              <span>المتبقي: <strong id="remainingGradUnits" style="color:#312e81;">154</strong> و</span>
+            </div>
+          </div>
+
+          <div id="gradPrereqStatusBox" style="padding:10px; border-radius:10px; border:1px solid #e2e8f0; display:flex; flex-direction:column; gap:6px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size:11px;">أهلية مشروع التخرج (EE599):</strong><span id="gradProjectBadge" class="badge">--</span>
+            </div>
+            <div id="gradPrereqStatusDetails" style="display:flex; flex-direction:column; gap:3px; font-size:10px;"></div>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:10px; border-radius:10px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="deptHeadApprovalCheck" onchange="toggleDeptHeadApproval()" style="width:16px; height:16px;">
+              <span style="font-weight:bold; font-size:11px; color:#0f172a;">استثناء معتمد خطياً من رئيس القسم</span>
+            </label>
+          </div>
+
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px; border-radius:10px; font-size:11px;">
+            <strong style="color:#166534; display:block; margin-bottom:2px;">توجيهات المرشد:</strong>
+            <p id="cardAdvisingNotes" style="color:#334155; line-height:1.4;">--</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card">
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
+            <div>
+              <div style="display:flex; gap:6px; align-items:center;">
+                <span id="statusBadge" class="badge"></span>
+                <span id="majorBadge" class="badge badge-secondary"></span>
+                <span id="approvalBadge" class="badge badge-purple" style="display:none;">بموافقة رئيس القسم</span>
+              </div>
+              <h2 id="currentStudentName" style="font-size:18px; font-weight:900; margin-top:4px; color:#0f172a;"></h2>
+              <span id="currentStudentId" style="font-size:11px; color:#64748b; font-family:monospace;"></span>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; padding:8px 14px; border-radius:10px; text-align:left;">
+              <span style="font-size:10px; color:#64748b; display:block; text-align:right;">الوحدات المسجلة فصلياً</span>
+              <div style="display:flex; align-items:baseline; justify-content:flex-end; gap:4px;">
+                <span id="registeredCreditsCount" style="font-size:22px; font-weight:900; color:#0b2545;">0</span>
+                <span style="font-size:11px; font-weight:bold; color:#64748b;">/ <span id="policyCreditsRange">18 - 21</span> و</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-wrapper">
+            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:11px; color:#64748b;">
+              <span>استيفاء الوحدات الفصلية:</span><span id="percentageText">0%</span>
+            </div>
+            <div class="progress-bar-bg"><div id="creditBar" class="progress-bar-fill" style="width:0%;"></div></div>
+            <div id="creditStatusAlert" style="font-size:11px; font-weight:bold; margin-top:4px;"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h4>تنزيل مقرر دراسي جديد للطالب</h4>
+            <span style="font-size:10px; color:#64748b;">فحص فوري للشروط وحفظ محلي تلقائي</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <select id="trackFilter" onchange="filterCourses()" class="form-select" style="min-width:160px;">
+              <option value="الكل">جميع المسارات</option>
+              <option value="المرحلة العامة">المرحلة العامة</option>
+              <option value="الأساسيات التخصصية">الأساسيات التخصصية</option>
+              <option value="المقررات التخصصية">المقررات التخصصية</option>
+              <option value="مسار الاتصالات">مسار الاتصالات</option>
+              <option value="مشروع التخرج">مشروع التخرج</option>
+              <option value="المواد الاختيارية">المواد الاختيارية</option>
+            </select>
+            <select id="courseSelectDropdown" class="form-select" style="flex:1; min-width:240px;">
+              <option value="">-- اختر المقرر لتنزيله للطالب --</option>
+            </select>
+            <button type="button" onclick="addSelectedCourse()" class="btn btn-primary" style="padding:8px 18px;">تنزيل المقرر</button>
+          </div>
+          <div id="addErrorMsg" style="display:none; background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; padding:8px 12px; border-radius:8px; font-weight:bold; font-size:11px;">
+            <span id="addErrorText"></span>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0; overflow:hidden;">
+          <div style="padding:12px 16px; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+            <h4 style="font-size:13px; font-weight:800; color:#0f172a;">المقررات المسجلة في الفصل الحالي</h4>
+            <button type="button" onclick="openPrintSeparateWindow()" class="btn btn-primary" style="padding:6px 14px; font-size:11px;">🖨️ طباعة تسجيل الطالب</button>
+          </div>
+          <div class="table-container" style="border:none;">
+            <table>
+              <thead>
+                <tr>
+                  <th style="text-align:center; width:35px;">#</th>
+                  <th>رمز المقرر</th>
+                  <th>اسم المقرر الدراسي</th>
+                  <th style="text-align:center;">الوحدات</th>
+                  <th style="text-align:center;">الساعات الأسبوعية</th>
+                  <th style="text-align:center;">درجة النجاح</th>
+                  <th>المتطلب السابق</th>
+                  <th>المسار الأكاديمي</th>
+                  <th style="text-align:center; width:60px;">إلغاء</th>
+                </tr>
+              </thead>
+              <tbody id="registeredTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="loginModal" class="modal-overlay hidden">
+    <div class="login-card">
+      <h3 style="font-size:15px; font-weight:900; color:#0b2545;">🔑 دخول المشرف الأكاديمي</h3>
+      <p style="font-size:11px; color:#64748b;">سجّل الدخول لمزامنة البيانات لحظياً بين الحاسوب والجوال.</p>
+      <div class="form-group"><label>البريد الإلكتروني:</label><input type="email" id="loginEmail" class="form-input" autocomplete="username" placeholder="advisor@uot.edu.ly"></div>
+      <div class="form-group"><label>كلمة المرور:</label><input type="password" id="loginPassword" class="form-input" autocomplete="current-password" placeholder="••••••••"></div>
+      <div id="loginError" style="display:none; background:#fee2e2; color:#991b1b; padding:8px 10px; border-radius:8px; font-size:11px; font-weight:bold;"></div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="btn btn-secondary" style="flex:1; justify-content:center;" onclick="closeLoginModal()">إلغاء</button>
+        <button type="button" class="btn btn-primary" style="flex:2; justify-content:center;" onclick="cloudSignIn()">دخول</button>
+      </div>
+    </div>
+  </div>
+  <!-- MODALS -->
+  <div id="policyModal" class="modal-overlay hidden">
+    <div class="modal-content modal-content-large">
+      <div class="modal-header"><h3>📜 استمارة طالب بقسم الهندسة الكهربائية والإلكترونية (كلية الهندسة - جامعة طرابلس)</h3><button type="button" class="modal-close" onclick="closePolicyModal()">&times;</button></div>
+      <div class="modal-body" style="line-height:1.6;">
+        <p><strong>جامعة طرابلس / كلية الهندسة</strong> - قسم الهندسة الكهربائية والإلكترونية.<br>• إجمالي متطلبات التخرج: <strong>154 وحدة دراسية كحد أقصى</strong>.<br>• <strong>قاعدة الساعات الأسبوعية:</strong> وحدتان تعادل 3 ساعات، 3 وحدات تعادل 4 ساعات، والمقررات العملية 3 ساعات لكل وحدة.<br>• إدخال جميع المقررات الدراسية وتعديل درجاتها بمرونة تامة.</p>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closePolicyModal()">إغلاق</button></div>
+    </div>
+  </div>
+
+  <!-- مودال إضافة وتعديل المقررات والدرجات المنجزة -->
+  <div id="passedCoursesModal" class="modal-overlay hidden">
+    <div class="modal-content modal-content-large">
+      <div class="modal-header" style="background:#065f46;">
+        <h3>📋 إضافة وتعديل المقررات والدرجات المنجزة للطالب: <span id="modalPassedStudentName"></span></h3>
+        <button type="button" class="modal-close" onclick="closePassedCoursesModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px; border-radius:8px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div>
+            <strong>إضافة مقرر إضافي / محول غير موجود بالخطة:</strong>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <input type="text" id="customCode" placeholder="الرمز (مثل EE601)" class="form-input" style="width:100px;">
+            <input type="text" id="customName" placeholder="اسم المقرر" class="form-input" style="width:130px;">
+            <input type="number" id="customCredits" placeholder="وحدات" class="form-input" style="width:65px;" min="1" max="6">
+            <input type="number" id="customHours" placeholder="ساعات أ." class="form-input" style="width:70px;" min="1" max="18">
+            <input type="number" id="customGrade" placeholder="الدرجة" class="form-input" style="width:75px;" min="50" max="100">
+            <button type="button" onclick="addCustomPassedCourse()" class="btn btn-success" style="padding:6px 12px; font-size:11px;">➕ إضافة</button>
+          </div>
+        </div>
+
+        <p style="font-size:11px; color:#475569; margin-bottom:6px;">حدد المقررات واضبط درجاتها (من 50 إلى 100). الساعات الأسبوعية تُحسب تلقائياً (2 وحدات = 3 ساعات، 3 وحدات = 4 ساعات، أو 3 ساعات لكل وحدة عملي):</p>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40px; text-align:center;">اجتاز</th>
+                <th>رمز المقرر</th>
+                <th>اسم المقرر الدراسي</th>
+                <th style="text-align:center;">وحدات</th>
+                <th style="text-align:center;">الساعات الأسبوعية</th>
+                <th style="text-align:center; width:110px;">الدرجة (50-100)</th>
+                <th>المتطلب السابق</th>
+                <th>المسار</th>
+                <th style="text-align:center; width:50px;">حذف</th>
+              </tr>
+            </thead>
+            <tbody id="passedCoursesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closePassedCoursesModal()">إغلاق</button>
+        <button type="button" class="btn btn-primary" onclick="saveStudentPassedCourses()">حفظ وتحديث الوحدات والمعدل آلياً</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال المقررات والوحدات المتبقية -->
+  <div id="remainingCoursesModal" class="modal-overlay hidden">
+    <div class="modal-content modal-content-large">
+      <div class="modal-header" style="background:#1e3a8a;">
+        <h3>🔍 المقررات والوحدات المتبقية للتخرج للطالب: <span id="modalRemainingStudentName"></span></h3>
+        <button type="button" class="modal-close" onclick="closeRemainingCoursesModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:#eef2ff; padding:10px; border-radius:8px; margin-bottom:10px; font-weight:bold; color:#312e81;">
+          إجمالي الوحدات المتبقية للتخرج: <span id="modalTotalRemainingCredits">0</span> وحدة (محسوبة بطرح الوحدات المستوفية من إجمالي 154 وحدة دراسية).
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>رمز المقرر</th>
+                <th>اسم المقرر الدراسي</th>
+                <th style="text-align:center;">الوحدات</th>
+                <th style="text-align:center;">الساعات الأسبوعية</th>
+                <th style="text-align:center;">درجة النجاح</th>
+                <th>المتطلب السابق</th>
+                <th>المسار الأكاديمي</th>
+              </tr>
+            </thead>
+            <tbody id="remainingCoursesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeRemainingCoursesModal()">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="addAdvisorModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header"><h3>➕ إضافة مشرف أكاديمي</h3><button type="button" class="modal-close" onclick="closeAddAdvisorModal()">&times;</button></div>
+      <div class="modal-body"><div class="form-group"><label>اسم عضو هيئة التدريس الكامل:</label><input type="text" id="newAdvisorNameInput" class="form-input" placeholder="مثال: د. علي أحمد"></div></div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeAddAdvisorModal()">إلغاء</button><button type="button" class="btn btn-success" onclick="saveNewAdvisor()">إضافة</button></div>
+    </div>
+  </div>
+
+  <div id="editAdvisorModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header"><h3>✏️ تعديل اسم المشرف</h3><button type="button" class="modal-close" onclick="closeEditAdvisorModal()">&times;</button></div>
+      <div class="modal-body"><div class="form-group"><label>الاسم الجديد:</label><input type="text" id="editAdvisorNameInput" class="form-input"></div></div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeEditAdvisorModal()">إلغاء</button><button type="button" class="btn btn-primary" onclick="saveEditAdvisor()">حفظ</button></div>
+    </div>
+  </div>
+
+  <div id="studentModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header"><h3 id="studentModalTitle">بيانات الطالب</h3><button type="button" class="modal-close" onclick="closeStudentModal()">&times;</button></div>
+      <div class="modal-body">
+        <input type="hidden" id="modalStudentIsNew" value="true">
+        <div class="form-group"><label>اسم الطالب الرباعي (إلزامي):</label><input type="text" id="modalStudentName" class="form-input" placeholder="مثال: محمد علي حسن أحمد"></div>
+        <div class="form-row">
+          <div class="form-group"><label>رقم القيد (8 أرقام إلزامي):</label><input type="text" id="modalStudentId" class="form-input" placeholder="مثال: 20240112" maxlength="8"></div>
+          <div class="form-group"><label>الشعبة:</label><input type="text" id="modalStudentMajor" class="form-input" value="شعبة الاتصالات"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>المعدل التراكمي (GPA):</label><input type="number" step="0.01" id="modalStudentGpa" class="form-input" value="3.00" readonly style="background:#f1f5f9;" title="يُحسب آلياً من نافذة الدرجات"></div>
+          <div class="form-group"><label>المستوى الدراسي (يُحسب آلياً):</label><input type="text" id="modalStudentLevelDisplay" class="form-input" value="المستوى 4" readonly style="background:#f1f5f9;" title="يُحسب آلياً بناءً على الوحدات المنجزة"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>الوحدات السابقة (تُحسب آلياً):</label><input type="number" id="modalStudentPassedHours" class="form-input" value="125" readonly style="background:#f1f5f9;" title="تُحسب آلياً من المواد المستوفية بحد أقصى 154"></div>
+          <div class="form-group"><label>الحالة:</label><select id="modalStudentStatus" class="form-select" disabled><option value="منتظم">منتظم</option><option value="متعثر">متعثر</option></select></div>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #cbd5e1; padding:10px; border-radius:8px;">
+          <strong style="font-size:11px;">شروط المشروع (EE599):</strong>
+          <label style="display:flex; align-items:center; gap:8px; margin-top:4px; font-size:11px;"><input type="checkbox" id="modalPassEE416"> نجح في هندسة اتصالات II (EE416)</label>
+          <label style="display:flex; align-items:center; gap:8px; margin-top:4px; font-size:11px;"><input type="checkbox" id="modalPassGH152"> نجح في كتابة تقارير (GH152)</label>
+        </div>
+        <div class="form-group"><label>ملاحظات:</label><textarea id="modalStudentNotes" class="form-textarea" rows="2"></textarea></div>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeStudentModal()">إلغاء</button><button type="button" class="btn btn-primary" onclick="saveStudentFromModal()">حفظ الطالب</button></div>
+    </div>
+  </div>
+
+  <div id="courseManagerModal" class="modal-overlay hidden">
+    <div class="modal-content modal-content-large">
+      <div class="modal-header" style="background:#065f46;"><h3>📚 إدارة المقررات (شعبة الاتصالات)</h3><button type="button" class="modal-close" onclick="closeCourseManagerModal()">&times;</button></div>
+      <div style="padding:10px 18px; background:#f8fafc; border-bottom:1px solid #e2e8f0;"><input type="text" id="courseSearchInput" oninput="renderCourseManagerList()" placeholder="🔍 ابحث برمز أو اسم المقرر..." class="form-input" style="max-width:280px;"></div>
+      <div class="modal-body" style="padding:0;"><div class="table-container" style="border:none;"><table><thead><tr><th>رمز</th><th>اسم المقرر</th><th style="text-align:center;">وحدات</th><th style="text-align:center;">الساعات الأسبوعية</th><th style="text-align:center;">درجة النجاح</th><th>متطلب سابق</th><th>مسار</th></tr></thead><tbody id="courseManagerTableBody"></tbody></table></div></div>
+      <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeCourseManagerModal()">إغلاق</button></div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    /* ============================================================
+       إعدادات مشروع Firebase — مربوط بمشروع: advising-uot
+       المزامنة السحابية اللحظية مفعّلة عبر Cloud Firestore.
+       تنبيه: هذه المفاتيح علنية بطبيعتها؛ الحماية الفعلية تتم عبر
+       قواعد Firestore (firestore.rules) وقائمة النطاقات المصرّح بها.
+       ============================================================ */
+    const firebaseConfig = {
+      apiKey: "AIzaSyAp1-K3x1FG9w_cugTIOFj3Ht0yCGyVr1o",
+      authDomain: "advising-uot.firebaseapp.com",
+      projectId: "advising-uot",
+      storageBucket: "advising-uot.firebasestorage.app",
+      messagingSenderId: "962684741457",
+      appId: "1:962684741457:web:98dadf676f8d8de7291570",
+      measurementId: "G-LWP0GLKJ40"
+    };
+  </script>
+  <script>
+    let advisors = [];
+    let currentAdvisor = "";
+    let currentSemester = "خريف";
+    let currentAcadYear = "2026-2027";
+
+    // حساب الساعات الأسبوعية بدقة: المقررات العملية (isLab=true) = 3 ساعات لكل وحدة. المقررات النظرية بـ 2 وحدات = 3 ساعات، وبـ 3 وحدات = 4 ساعات.
+    function calculateWeeklyHours(credits, isLab = false) {
+      credits = Number(credits) || 0;
+      if (credits === 2) return 3;
+      if (isLab) return credits * 3;
+      if (credits === 3) return 4;
+      return Math.round((credits * 4) / 3) || 1;
+    }
+
+    let courses = [
+      {"code": "GS101", "name": "رياضيات 1 (رياضة I)", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GS111", "name": "فيزياء 1 (فيزياء I)", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GH150", "name": "لغة عربية 1", "credits": 2, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GH141", "name": "لغة انجليزية 1", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GS199", "name": "مقدمة حاسب آلي", "credits": 2, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GE206", "name": "الإحصاء والاحتمالات", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GH198", "name": "الثقافة الوطنية", "credits": 2, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GS102", "name": "رياضيات 2 (رياضة II)", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS101", "track": "المرحلة العامة", "level": 1},
+      {"code": "GS112", "name": "فيزياء 2 (فيزياء II)", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS111", "track": "المرحلة العامة", "level": 1},
+      {"code": "GH142", "name": "لغة انجليزية II", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GH141", "track": "المرحلة العامة", "level": 1},
+      {"code": "GS121", "name": "ميكانيكا هندسية 1", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS101", "track": "المرحلة العامة", "level": 1},
+      {"code": "GE129", "name": "تقنية ورش", "credits": 2, "isLab": true, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GH106", "name": "ثقافة اسلامية", "credits": 2, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GE127", "name": "رسم هندسي", "credits": 2, "isLab": true, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "level": 1},
+      {"code": "GS203", "name": "رياضيات 3 (رياضة III)", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS102", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "GS200", "name": "برمجة حاسوب", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS199,GS102", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "GS115", "name": "كيمياء عامة", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "EE200", "name": "أسس هـ. كهربائية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS102, GS112", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "GE125", "name": "هندسة وصفية", "credits": 2, "isLab": true, "passingGrade": 50, "prereq": "لا يوجد", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "GE133", "name": "خواص مواد", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "GS112L", "name": "معمل فيزياء", "credits": 1, "isLab": true, "passingGrade": 50, "prereq": "GS112", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "GS204", "name": "رياضيات 4 (رياضة IV)", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS203", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "GH152", "name": "كتابة تقارير", "credits": 1, "isLab": false, "passingGrade": 50, "prereq": "GH150, GH142", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "ME210", "name": "ديناميكا حرارية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS102, GS112", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "EE202", "name": "شبكات كهربائية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS112, EE200", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "EE219", "name": "أسس دوائر الالكترونية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GE133, EE200", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "EE234", "name": "مقدمة أنظمة رقمية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS112, EE200", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "EE201", "name": "معمل الكهربائية", "credits": 2, "isLab": true, "passingGrade": 50, "prereq": "GS112L, EE200, EE202", "track": "الأساسيات التخصصية", "level": 2},
+      {"code": "EE302", "name": "إشارات ونظم", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS204, EE202", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE303", "name": "طرق عددية وبرمجة", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS200, GS203, GS204", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE304", "name": "قياسات وأجهزة", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE202, EE219, EE234", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE319", "name": "دوائر الالكترونات التماثلية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE202, EE219", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE313", "name": "كهرومغناطيسية 1", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS203, GS204", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE331", "name": "معمل الرقمية", "credits": 2, "isLab": true, "passingGrade": 50, "prereq": "EE201, EE234", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE300", "name": "م تطبيقات الحاسوب والتصميم", "credits": 2, "isLab": false, "passingGrade": 50, "prereq": "GS200", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE311", "name": "معمل الالكترونيات", "credits": 2, "isLab": true, "passingGrade": 50, "prereq": "EE201, EE319", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE316", "name": "هندسة اتصالات 1", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GS204, EE302", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE342", "name": "هندسة قوي كهربائية 1", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "ME210, EE202", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE352", "name": "آلات كهربائية 1", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "ME210, EE202", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE362", "name": "أنظمة تحكم تماثلي", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE302, EE304", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE334", "name": "مقدمة معالجات دقيقة", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE234, EE319", "track": "المقررات التخصصية", "level": 3},
+      {"code": "EE416", "name": "هندسة اتصالات II", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "GE206, EE316", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE421", "name": "م اتصالات والالكترونيات 1", "credits": 2, "isLab": true, "passingGrade": 50, "prereq": "EE304, EE311, EE313, EE316, EE331", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE423", "name": "شبكات فعالة", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE302, EE319", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE584", "name": "معالجة الاشارة الرقمية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE302, EE303", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE413", "name": "كهرومغناطيسية II", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE313, EE316", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE419", "name": "دوائر الالكترونية الرقمية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE319", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE516", "name": "منظومة اتصالات 1", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE416", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE595", "name": "اتصالات البيانات وشبكات", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE416", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE521", "name": "م اتصالات والالكترونيات II", "credits": 2, "isLab": true, "passingGrade": 50, "prereq": "EE421, EE416, EE419, EE513", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE513", "name": "كهرومغناطيسية III", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE413", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE527", "name": "الاتصالات البصرية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE419, EE416", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE539", "name": "أنظمة الاتصالات اللاسلكية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE516", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE526", "name": "منظومة اتصالات II", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE416", "track": "مسار الاتصالات", "level": 4},
+      {"code": "EE599", "name": "مشروع التخرج", "credits": 3, "isLab": true, "passingGrade": 50, "prereq": "اجتياز 125 وحدة + EE416 + GH152", "track": "مشروع التخرج", "level": 4},
+      {"code": "EE523", "name": "هندسة الموجات الدقيقة", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE513", "track": "المواد الاختيارية", "level": 4},
+      {"code": "EE433", "name": "نظرية المعلومات والتشفير", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE234, EE416", "track": "المواد الاختيارية", "level": 4},
+      {"code": "EE528", "name": "دوائر الاتصالات الالكترونية", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE319", "track": "المواد الاختيارية", "level": 4},
+      {"code": "EE429", "name": "الكترونات أشباه الموصلات", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE319", "track": "المواد الاختيارية", "level": 4},
+      {"code": "EE534", "name": "برمجة المعالجات الدقيقة", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE331, EE334", "track": "المواد الاختيارية", "level": 4},
+      {"code": "EE525", "name": "الصوتيات وهندسة الصوت", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE313, EE316", "track": "المواد الاختيارية", "level": 4},
+      {"code": "EE448", "name": "الكترونيات القوى", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE319, EE362, EE342", "track": "المواد الاختيارية", "level": 4},
+      {"code": "EE564", "name": "معالجة الصورة الرقمية (DIP)", "credits": 3, "isLab": false, "passingGrade": 50, "prereq": "EE584", "track": "المواد الاختيارية", "level": 4}
+    ];
+
+    let students = [];
+    let currentStudentId = null;
+
+    function init() {
+      const semEl = document.getElementById('semesterSelect');
+      const yrEl = document.getElementById('acadYearSelect');
+      if (semEl) semEl.value = currentSemester;
+      if (yrEl) yrEl.value = currentAcadYear;
+      loadAdvisorsLocally();
+      loadStudentsLocally();
+      renderAdvisorSelect();
+      populateDropdown("الكل");
+      renderStudentsList();
+      if (students.length > 0) {
+        selectStudent(students[0].id);
+      }
+    }
+
+    const LS = {
+      get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+    };
+    function saveAdvisorsLocally() {
+      LS.set('azaytuna_advisors_db', JSON.stringify(advisors));
+      LS.set('azaytuna_current_advisor', currentAdvisor);
+      LS.set('azaytuna_advisors_initialized', 'true');
+    }
+
+    function loadAdvisorsLocally() {
+      try {
+        const initialized = LS.get('azaytuna_advisors_initialized');
+        const advData = LS.get('azaytuna_advisors_db');
+        if (initialized && advData !== null) {
+          const parsed = JSON.parse(advData);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            advisors = parsed;
+          } else {
+            advisors = ["د. حسن زاوية", "د. مصطفى عبدالله", "د. محمد سمير البوني"];
+          }
+        } else {
+          advisors = ["د. حسن زاوية", "د. مصطفى عبدالله", "د. محمد سمير البوني"];
+          saveAdvisorsLocally();
+        }
+
+        const currAdv = LS.get('azaytuna_current_advisor');
+        if (currAdv && advisors.includes(currAdv)) {
+          currentAdvisor = currAdv;
+        } else if (advisors.length > 0) {
+          currentAdvisor = advisors[0];
+        } else {
+          currentAdvisor = "";
+        }
+      } catch(e) {
+        advisors = ["د. حسن زاوية", "د. مصطفى عبدالله", "د. محمد سمير البوني"];
+        currentAdvisor = advisors[0];
+      }
+    }
+
+    function saveStudentsLocally() {
+      LS.set('azaytuna_students_db', JSON.stringify(students));
+      LS.set('azaytuna_initialized', 'true');
+    }
+
+    function manualSaveData() {
+      saveAdvisorsLocally();
+      saveStudentsLocally();
+      alert('✅ تم حفظ جميع بيانات الطلاب والمشرفين وسجلاتهم محلياً بنجاح على الجهاز!');
+    }
+
+    function exportStudentsToExcel() {
+      if (students.length === 0) return alert('لا توجد بيانات طلاب للتصدير.');
+      
+      let csvContent = "\uFEFFرقم القيد,اسم الطالب,الشعبة,المعدل التراكمي,الوحدات المنجزة,المستوى,الحالة,المقررات المسجلة\n";
+      students.forEach(s => {
+        const regCourses = (s.registered || []).join(' - ');
+        csvContent += `${s.id},"${s.name}","${s.major || 'شعبة الاتصالات'}",${s.gpa},${s.passedHours},"${s.level}","${s.status}","${regCourses}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Tripoli_EE_Students_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function loadStudentsLocally() {
+      try {
+        const initialized = LS.get('azaytuna_initialized');
+        const data = LS.get('azaytuna_students_db');
+        if (initialized && data !== null) {
+          const parsed = JSON.parse(data);
+          if (Array.isArray(parsed)) {
+            students = parsed;
+            return;
+          }
+        }
+      } catch(e) {}
+      
+      students = [
+        {
+          id: 20240112,
+          name: "طارق مفتاح البوعيشي",
+          major: "شعبة الاتصالات",
+          gpa: 3.25,
+          passedHours: 126,
+          level: "المستوى 4",
+          status: "منتظم",
+          advisingNote: "مستوفٍ لشروط مشروع التخرج.",
+          passedPrereqs: ["GS101", "GS111", "GH150", "GH141", "GS199", "GE206", "GH198", "GS102", "GS112", "GH142", "GS121", "GE129", "GH106", "GE127", "GS203", "GS200", "GS115", "EE200", "GE125", "GE133", "GS112L", "GS204", "GH152", "ME210", "EE202", "EE219", "EE234", "EE201", "EE302", "EE303", "EE304", "EE319", "EE313", "EE331", "EE300", "EE311", "EE316", "EE342", "EE352", "EE362", "EE334", "EE416"],
+          passedGrades: {},
+          customPassedCourses: [],
+          hasDeptApproval: false,
+          registered: ["EE516", "EE595", "EE521", "EE513", "EE527", "EE599"]
+        }
+      ];
+      saveStudentsLocally();
+    }
+
+    function renderAdvisorSelect() {
+      const select = document.getElementById('advisorSelect');
+      select.innerHTML = '';
+      if (!advisors || advisors.length === 0) {
+        advisors = ["د. حسن زاوية", "د. مصطفى عبدالله", "د. محمد سمير البوني"];
+        currentAdvisor = advisors[0];
+        saveAdvisorsLocally();
+      }
+      advisors.forEach(adv => {
+        const opt = document.createElement('option');
+        opt.value = adv; opt.textContent = adv;
+        if (adv === currentAdvisor) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    function onAdvisorSelectChange() { 
+      currentAdvisor = document.getElementById('advisorSelect').value;
+      saveAdvisorsLocally();
+    }
+
+    function openAddAdvisorModal() { document.getElementById('newAdvisorNameInput').value = ''; document.getElementById('addAdvisorModal').classList.remove('hidden'); }
+    function closeAddAdvisorModal() { document.getElementById('addAdvisorModal').classList.add('hidden'); }
+    
+    function saveNewAdvisor() {
+      const name = document.getElementById('newAdvisorNameInput').value.trim();
+      if (!name) return alert('أدخل اسم المشرف');
+      if (advisors.includes(name)) return alert('المشرف موجود مسبقاً');
+      advisors.push(name); 
+      currentAdvisor = name; 
+      saveAdvisorsLocally();
+      renderAdvisorSelect(); 
+      closeAddAdvisorModal();
+    }
+
+    function openEditAdvisorModal() { 
+      if (!currentAdvisor) return alert('لا يوجد مشرف محدد للتعديل');
+      document.getElementById('editAdvisorNameInput').value = currentAdvisor; 
+      document.getElementById('editAdvisorModal').classList.remove('hidden'); 
+    }
+    
+    function closeEditAdvisorModal() { document.getElementById('editAdvisorModal').classList.add('hidden'); }
+    
+    function saveEditAdvisor() {
+      const newName = document.getElementById('editAdvisorNameInput').value.trim();
+      if (!newName) return;
+      const idx = advisors.indexOf(currentAdvisor);
+      if (idx !== -1) {
+        advisors[idx] = newName;
+      } else {
+        advisors.push(newName);
+      }
+      currentAdvisor = newName; 
+      saveAdvisorsLocally();
+      renderAdvisorSelect(); 
+      closeEditAdvisorModal();
+    }
+
+    function deleteCurrentAdvisor() {
+      if (advisors.length <= 1) return alert('يجب بقاء مشرف واحد على الأقل في القائمة');
+      if (confirm(`حذف المشرف ${currentAdvisor} نهائياً؟`)) {
+        advisors = advisors.filter(a => a !== currentAdvisor);
+        currentAdvisor = advisors.length > 0 ? advisors[0] : "";
+        saveAdvisorsLocally();
+        renderAdvisorSelect();
+      }
+    }
+
+    function onSemesterChange() {
+      currentSemester = document.getElementById('semesterSelect').value;
+      currentAcadYear = document.getElementById('acadYearSelect').value;
+      document.getElementById('semesterDisplayLabel').textContent = `الفصل الدراسي: ${currentSemester} ${currentAcadYear} م | الأسبقية مفعلة`;
+    }
+
+    function openPolicyModal() { document.getElementById('policyModal').classList.remove('hidden'); }
+    function closePolicyModal() { document.getElementById('policyModal').classList.add('hidden'); }
+
+    // حساب المستوى الدراسي آلياً بناءً على عدد الوحدات السابقة المنجزة
+    function calculateAutomaticLevel(passedHours) {
+      if (passedHours >= 127) return "المستوى 5";
+      if (passedHours >= 96) return "المستوى 4";
+      if (passedHours >= 64) return "المستوى 3";
+      if (passedHours >= 32) return "المستوى 2";
+      return "المستوى 1";
+    }
+
+    // حساب نقاط المعدل التراكمي وفق معايير كلية الهندسة - جامعة طرابلس
+    function getEngineeringGpaPoints(grade) {
+      if (grade >= 85) return 4.00; // ممتاز (A)
+      if (grade >= 75) return 3.50; // جيد جداً (B+)
+      if (grade >= 65) return 3.00; // جيد (B)
+      if (grade >= 55) return 2.50; // مرضي (C+)
+      if (grade >= 50) return 2.00; // مقبول (C)
+      return 0.00; // راسب (F)
+    }
+
+    // إدارة نافذة المواد المستوفية والدرجات الإضافية مع عرض الساعات الأسبوعية
+    function openPassedCoursesModal() {
+      if (!currentStudentId) return;
+      const s = students.find(item => item.id === currentStudentId);
+      if (!s) return;
+
+      document.getElementById('modalPassedStudentName').textContent = `${s.name} (${s.id})`;
+      const tbody = document.getElementById('passedCoursesTableBody');
+      tbody.innerHTML = '';
+
+      if (!s.passedGrades) s.passedGrades = {};
+      if (!s.customPassedCourses) s.customPassedCourses = [];
+
+      // 1. عرض جميع مقررات الخطة الدراسية مع حساب الساعات الأسبوعية بدقة (2 وحدات = 3 ساعات مباشرة)
+      courses.forEach(c => {
+        const isPassed = (s.passedPrereqs || []).includes(c.code);
+        const gradeVal = s.passedGrades[c.code] !== undefined ? s.passedGrades[c.code] : (isPassed ? 75 : '');
+        // القاعدة الصارمة: إذا كانت الوحدات 2 (سواء عملي مثل الورش والمعامل أو نظري) فإن الساعات الأسبوعية = 3 ساعات
+        const weeklyHrs = calculateWeeklyHours(c.credits, c.isLab);
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center;"><input type="checkbox" class="passed-course-chk" value="${c.code}" ${isPassed ? 'checked' : ''} style="width:16px; height:16px;" onchange="toggleGradeInput(this)"></td>
+          <td><strong>${c.code}</strong></td>
+          <td>${c.name}</td>
+          <td style="text-align:center;"><strong>${c.credits}</strong></td>
+          <td style="text-align:center;"><span class="badge badge-info">${weeklyHrs} ساعات</span></td>
+          <td style="text-align:center;"><input type="number" min="50" max="100" class="form-input course-grade-input" data-code="${c.code}" value="${gradeVal}" ${isPassed ? '' : 'disabled'} style="text-align:center; width:90px;" placeholder="من 50"></td>
+          <td>${c.prereq}</td>
+          <td><span class="badge badge-info">${c.track}</span></td>
+          <td style="text-align:center;">--</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // 2. عرض المقررات الإضافية أو المحولة الخاصة بالطالب مع الساعات الأسبوعية
+      s.customPassedCourses.forEach((cc, idx) => {
+        const customWeeklyHrs = cc.weeklyHours || calculateWeeklyHours(cc.credits, false);
+        const tr = document.createElement('tr');
+        tr.style.background = "#f0fdf4";
+        tr.innerHTML = `
+          <td style="text-align:center;"><input type="checkbox" class="passed-custom-chk" value="${idx}" checked style="width:16px; height:16px;"></td>
+          <td><strong>${cc.code}</strong> <span class="badge badge-success">إضافي</span></td>
+          <td>${cc.name}</td>
+          <td style="text-align:center;"><strong>${cc.credits}</strong></td>
+          <td style="text-align:center;"><span class="badge badge-info">${customWeeklyHrs} ساعات</span></td>
+          <td style="text-align:center;"><input type="number" min="50" max="100" class="form-input custom-grade-input" data-index="${idx}" value="${cc.grade}" style="text-align:center; width:90px;"></td>
+          <td>مقرر محول/إضافي</td>
+          <td><span class="badge badge-purple">خارج الخطة</span></td>
+          <td style="text-align:center;"><button type="button" onclick="removeCustomPassedCourse(${idx})" class="btn btn-danger" style="padding:2px 6px; font-size:10px;">حذف</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('passedCoursesModal').classList.remove('hidden');
+    }
+
+    function toggleGradeInput(chk) {
+      const row = chk.closest('tr');
+      const input = row.querySelector('.course-grade-input');
+      if (chk.checked) {
+        input.disabled = false;
+        if (!input.value) input.value = 75;
+      } else {
+        input.disabled = true;
+        input.value = '';
+      }
+    }
+
+    function addCustomPassedCourse() {
+      const s = students.find(item => item.id === currentStudentId);
+      if (!s) return;
+
+      const code = document.getElementById('customCode').value.trim();
+      const name = document.getElementById('customName').value.trim();
+      const credits = parseInt(document.getElementById('customCredits').value);
+      const weeklyHours = parseInt(document.getElementById('customHours').value) || calculateWeeklyHours(credits, false);
+      const grade = parseFloat(document.getElementById('customGrade').value);
+
+      if (!code || !name || isNaN(credits) || isNaN(grade)) {
+        return alert('⚠️ يرجى تعبئة حقول الرمز، الاسم، الوحدات، والدرجة بشكل صحيح.');
+      }
+      if (grade < 50 || grade > 100) {
+        return alert('⚠️ درجة النجاح يجب أن تكون بين 50 و 100.');
+      }
+
+      if (!s.customPassedCourses) s.customPassedCourses = [];
+      s.customPassedCourses.push({ code, name, credits, weeklyHours, grade });
+
+      document.getElementById('customCode').value = '';
+      document.getElementById('customName').value = '';
+      document.getElementById('customCredits').value = '';
+      document.getElementById('customHours').value = '';
+      document.getElementById('customGrade').value = '';
+
+      openPassedCoursesModal();
+    }
+
+    function removeCustomPassedCourse(idx) {
+      const s = students.find(item => item.id === currentStudentId);
+      if (!s || !s.customPassedCourses) return;
+      s.customPassedCourses.splice(idx, 1);
+      openPassedCoursesModal();
+    }
+
+    function closePassedCoursesModal() {
+      document.getElementById('passedCoursesModal').classList.add('hidden');
+    }
+
+    function saveStudentPassedCourses() {
+      const s = students.find(item => item.id === currentStudentId);
+      if (!s) return;
+
+      let passedCodes = [];
+      let passedGradesMap = {};
+      let totalPassedCredits = 0;
+      let totalQualityPoints = 0;
+
+      // حساب المقررات الأساسية المحددة
+      const standardRows = document.querySelectorAll('#passedCoursesTableBody tr');
+      let invalidCode = null;
+      standardRows.forEach(row => {
+        const chk = row.querySelector('.passed-course-chk');
+        const input = row.querySelector('.course-grade-input');
+        if (chk && chk.checked && !invalidCode) {
+          const g = parseFloat(input.value);
+          if (isNaN(g) || g < 50 || g > 100) invalidCode = chk.value;
+        }
+      });
+      if (invalidCode) {
+        alert(`⚠️ يرجى إدخال درجة صحيحة (من 50 إلى 100) للمقرر: ${invalidCode}`);
+        return;
+      }
+      standardRows.forEach(row => {
+        const chk = row.querySelector('.passed-course-chk');
+        const input = row.querySelector('.course-grade-input');
+        if (chk && chk.checked) {
+          const code = chk.value;
+          const grade = parseFloat(input.value);
+          passedCodes.push(code);
+          passedGradesMap[code] = grade;
+
+          const c = courses.find(item => item.code === code);
+          if (c) {
+            totalPassedCredits += c.credits;
+            let gpaPoints = getEngineeringGpaPoints(grade);
+            totalQualityPoints += (gpaPoints * c.credits);
+          }
+        }
+      });
+
+      // حساب المقررات الإضافية المخصصة
+      const customCheckboxes = document.querySelectorAll('.passed-custom-chk');
+      let updatedCustomCourses = [];
+      customCheckboxes.forEach(chk => {
+        if (chk.checked) {
+          const idx = parseInt(chk.value);
+          const cc = s.customPassedCourses[idx];
+          const row = chk.closest('tr');
+          const gradeInput = row.querySelector('.custom-grade-input');
+          const grade = parseFloat(gradeInput.value);
+          
+          if (!isNaN(grade) && grade >= 50 && grade <= 100) {
+            cc.grade = grade;
+            updatedCustomCourses.push(cc);
+            totalPassedCredits += cc.credits;
+            let gpaPoints = getEngineeringGpaPoints(grade);
+            totalQualityPoints += (gpaPoints * cc.credits);
+          }
+        }
+      });
+
+      s.passedPrereqs = passedCodes;
+      s.passedGrades = passedGradesMap;
+      s.customPassedCourses = updatedCustomCourses;
+      
+      // قيد الحماية الأكاديمي: الوحدات السابقة لا تتجاوز 154 وحدة كحد أقصى للتخرج
+      s.passedHours = Math.min(totalPassedCredits, 154);
+      
+      // تحديث المستوى الدراسي آلياً بناءً على إجمالي الوحدات المنجزة
+      s.level = calculateAutomaticLevel(s.passedHours);
+      
+      if (totalPassedCredits > 0) {
+        s.gpa = parseFloat((totalQualityPoints / totalPassedCredits).toFixed(2));
+      } else {
+        s.gpa = 0.00;
+      }
+
+      const isAtRisk = s.gpa < 2.00;
+      s.status = isAtRisk ? "متعثر" : "منتظم";
+      s.advisingNote = isAtRisk ? "⚠️ طالب متعثر: المعدل التراكمي أقل من 2.00." : "طالب منتظم.";
+
+      saveStudentsLocally();
+      closePassedCoursesModal();
+      selectStudent(currentStudentId);
+      renderStudentsList();
+      alert('✅ تم حفظ الدرجات وتحديث الوحدات والمستوى الدراسي والمعدل التراكمي (GPA) آلياً وفق معايير كلية الهندسة - جامعة طرابلس بنجاح!');
+    }
+
+    // إدارة نافذة المقررات المتبقية مع الطرح الصحيح من 154 وحدة
+    function openRemainingCoursesModal() {
+      if (!currentStudentId) return;
+      const s = students.find(item => item.id === currentStudentId);
+      if (!s) return;
+
+      document.getElementById('modalRemainingStudentName').textContent = `${s.name} (${s.id})`;
+      const tbody = document.getElementById('remainingCoursesTableBody');
+      tbody.innerHTML = '';
+
+      const passed = s.passedPrereqs || [];
+      const remainingCourses = courses.filter(c => !passed.includes(c.code));
+      
+      // المعادلة الدقيقة: 154 مطروحاً منها الوحدات المنجزة (الوحدات السابقة)
+      const totalRemainingCredits = Math.max(154 - (s.passedHours || 0), 0);
+
+      document.getElementById('modalTotalRemainingCredits').textContent = totalRemainingCredits;
+
+      if (totalRemainingCredits === 0 || remainingCourses.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#15803d; font-weight:bold; padding:20px;">🎉 مبروك! لقد استوفى الطالب جميع وحدات ومتطلبات التخرج (154 وحدة) بنجاح.</td></tr>`;
+      } else {
+        remainingCourses.forEach(c => {
+          const weeklyHrs = calculateWeeklyHours(c.credits, c.isLab);
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${c.code}</strong></td>
+            <td>${c.name}</td>
+            <td style="text-align:center;"><strong>${c.credits}</strong></td>
+            <td style="text-align:center;"><span class="badge badge-info">${weeklyHrs} ساعات</span></td>
+            <td style="text-align:center;">${c.passingGrade || 50}</td>
+            <td>${c.prereq}</td>
+            <td><span class="badge badge-info">${c.track}</span></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      document.getElementById('remainingCoursesModal').classList.remove('hidden');
+    }
+
+    function closeRemainingCoursesModal() {
+      document.getElementById('remainingCoursesModal').classList.add('hidden');
+    }
+
+    function renderStudentsList() {
+      const container = document.getElementById('studentsList');
+      container.innerHTML = '';
+      document.getElementById('studentsCountSpan').textContent = students.length;
+      if (students.length === 0) { clearDashboard(); return; }
+
+      students.forEach(s => {
+        const totalCredits = (s.registered || []).reduce((sum, cCode) => {
+          const c = courses.find(item => item.code === cCode);
+          return sum + (c ? c.credits : 0);
+        }, 0);
+        
+        const isAtRisk = (s.gpa || 0) < 2.00;
+        s.status = isAtRisk ? "متعثر" : "منتظم";
+        if (!s.level) s.level = calculateAutomaticLevel(s.passedHours || 0);
+
+        const card = document.createElement('div');
+        card.className = `student-item ${s.id === currentStudentId ? 'active' : ''}`;
+        card.onclick = () => selectStudent(s.id);
+        card.innerHTML = `<div><strong>${s.name}</strong><br><span style="font-size:10px; color:#64748b;">${s.id} | ${s.passedHours} و سابقة (${s.level})</span></div><div style="text-align:left;"><span class="badge ${isAtRisk ? 'badge-warning' : 'badge-success'}">${s.status}</span><br><strong>${totalCredits} و</strong></div>`;
+        container.appendChild(card);
+      });
+    }
+
+    function selectStudent(id) {
+      currentStudentId = id;
+      const s = students.find(item => item.id === id);
+      if (!s) return;
+      
+      const isAtRisk = (s.gpa || 0) < 2.00;
+      s.status = isAtRisk ? "متعثر" : "منتظم";
+      if (!s.level) s.level = calculateAutomaticLevel(s.passedHours || 0);
+
+      document.getElementById('currentStudentName').textContent = s.name;
+      document.getElementById('currentStudentId').textContent = `رقم القيد: ${s.id}`;
+      document.getElementById('majorBadge').textContent = `${s.major || 'شعبة الاتصالات'} (${s.level})`;
+      document.getElementById('statusBadge').textContent = isAtRisk ? 'متعثر (حد أقصى 18 وحدة)' : 'منتظم (18 - 21 وحدة)';
+      document.getElementById('statusBadge').className = `badge ${isAtRisk ? 'badge-warning' : 'badge-success'}`;
+      document.getElementById('policyCreditsRange').textContent = isAtRisk ? '12 - 18' : '18 - 21';
+      document.getElementById('cardGpa').textContent = (s.gpa || 0).toFixed(2);
+      document.getElementById('cardPassedHours').textContent = `${s.passedHours || 0} و`;
+      document.getElementById('cardLevel').textContent = s.level;
+      document.getElementById('cardAdvisingNotes').textContent = s.advisingNote || (isAtRisk ? "⚠️ طالب متعثر: معدله أقل من 2.00، الحد الأقصى للتسجيل 18 وحدة." : "طالب منتظم.");
+      document.getElementById('deptHeadApprovalCheck').checked = !!s.hasDeptApproval;
+      document.getElementById('approvalBadge').style.display = s.hasDeptApproval ? 'inline-block' : 'none';
+
+      updateGradPrereqBox(s);
+      hideError();
+      updateDashboard(s);
+      renderStudentsList();
+    }
+
+    function clearDashboard() {
+      document.getElementById('currentStudentName').textContent = 'لا يوجد طالب';
+      document.getElementById('currentStudentId').textContent = '--';
+      document.getElementById('registeredCreditsCount').textContent = '0';
+      document.getElementById('registeredTableBody').innerHTML = `<tr><td colspan="9" style="text-align:center;">اختر أو أضف طالباً</td></tr>`;
+    }
+
+    function toggleDeptHeadApproval() {
+      const s = students.find(item => item.id === currentStudentId);
+      if (!s) return;
+      s.hasDeptApproval = document.getElementById('deptHeadApprovalCheck').checked;
+      document.getElementById('approvalBadge').style.display = s.hasDeptApproval ? 'inline-block' : 'none';
+      saveStudentsLocally();
+      updateDashboard(s);
+    }
+
+    function updateGradPrereqBox(student) {
+      const has125 = (student.passedHours || 0) >= 125;
+      const passed = student.passedPrereqs || [];
+      const hasEE416 = passed.includes("EE416");
+      const hasGH152 = passed.includes("GH152");
+      const isEligible = has125 && hasEE416 && hasGH152;
+
+      const details = document.getElementById('gradPrereqStatusDetails');
+      const box = document.getElementById('gradPrereqStatusBox');
+      const pBadge = document.getElementById('gradProjectBadge');
+
+      pBadge.textContent = isEligible ? "مؤهل للمشروع" : "غير مؤهل للمشروع";
+      pBadge.className = `badge ${isEligible ? 'badge-success' : 'badge-danger'}`;
+      details.innerHTML = `<div>1. استيفاء 125 وحدة: <strong>${has125 ? '✔' : '✖'}</strong></div><div>2. نجح في EE416: <strong>${hasEE416 ? '✔' : '✖'}</strong></div><div>3. نجح في GH152: <strong>${hasGH152 ? '✔' : '✖'}</strong></div>`;
+      box.style.background = isEligible ? "#f0fdf4" : "#fffbeb";
+    }
+
+    function openAddStudentModal() {
+      document.getElementById('studentModalTitle').textContent = '➕ إضافة طالب';
+      document.getElementById('modalStudentIsNew').value = 'true';
+      document.getElementById('modalStudentName').value = '';
+      document.getElementById('modalStudentId').value = '';
+      document.getElementById('modalStudentGpa').value = '3.00';
+      document.getElementById('modalStudentPassedHours').value = 0;
+      document.getElementById('modalStudentLevelDisplay').value = 'المستوى 1';
+      document.getElementById('modalPassEE416').checked = false;
+      document.getElementById('modalPassGH152').checked = false;
+      document.getElementById('studentModal').classList.remove('hidden');
+    }
+    
+    function openEditCurrentStudentModal() {
+      if (!currentStudentId) return;
+      const s = students.find(item => item.id === currentStudentId);
+      if (!s) return;
+      document.getElementById('studentModalTitle').textContent = `✏️ تعديل ${s.name}`;
+      document.getElementById('modalStudentIsNew').value = 'false';
+      document.getElementById('modalStudentName').value = s.name;
+      document.getElementById('modalStudentId').value = s.id;
+      document.getElementById('modalStudentGpa').value = s.gpa;
+      document.getElementById('modalStudentPassedHours').value = s.passedHours;
+      document.getElementById('modalStudentLevelDisplay').value = s.level || calculateAutomaticLevel(s.passedHours);
+      document.getElementById('modalPassEE416').checked = (s.passedPrereqs || []).includes("EE416");
+      document.getElementById('modalPassGH152').checked = (s.passedPrereqs || []).includes("GH152");
+      document.getElementById('studentModal').classList.remove('hidden');
+    }
+    
+    function closeStudentModal() { document.getElementById('studentModal').classList.add('hidden'); }
+
+    function saveStudentFromModal() {
+      const isNew = document.getElementById('modalStudentIsNew').value === 'true';
+      const name = document.getElementById('modalStudentName').value.trim();
+      const idStr = document.getElementById('modalStudentId').value.trim();
+      const passEE416 = document.getElementById('modalPassEE416').checked;
+      const passGH152 = document.getElementById('modalPassGH152').checked;
+
+      const nameParts = name.split(/\s+/).filter(Boolean);
+      if (nameParts.length < 4) {
+        return alert('⚠️ خطأ: يجب إدخال اسم الطالب كاملاً (اسم رباعي مكون من 4 كلمات على الأقل).');
+      }
+
+      if (!/^\d{8}$/.test(idStr)) {
+        return alert('⚠️ خطأ: رقم القيد يجب أن يكون مكوناً من 8 أرقام (ديجيت) بدقة.');
+      }
+
+      const id = parseInt(idStr);
+
+      let targetStudent;
+      if (isNew) {
+        if (students.some(item => item.id === id)) return alert('⚠️ رقم القيد موجود مسبقاً.');
+        const prereqs = ["GS101"];
+        if (passEE416) prereqs.push("EE416");
+        if (passGH152) prereqs.push("GH152");
+        targetStudent = { id, name, major: "شعبة الاتصالات", gpa: 3.00, passedHours: 0, level: "المستوى 1", status: "منتظم", advisingNote: "", passedPrereqs: prereqs, passedGrades: {}, customPassedCourses: [], hasDeptApproval: false, registered: [] };
+        students.push(targetStudent);
+        currentStudentId = id;
+      } else {
+        targetStudent = students.find(item => item.id === currentStudentId);
+        if (!targetStudent) return alert('⚠️ تعذر العثور على الطالب المحدد.');
+        if (id !== currentStudentId && students.some(item => item.id === id)) {
+          return alert('⚠️ رقم القيد موجود مسبقاً لطالب آخر.');
+        }
+        targetStudent.name = name;
+        targetStudent.id = id;
+        currentStudentId = id;
+        if (!targetStudent.passedPrereqs) targetStudent.passedPrereqs = [];
+        if (passEE416 && !targetStudent.passedPrereqs.includes("EE416")) targetStudent.passedPrereqs.push("EE416");
+        if (!passEE416 && targetStudent.passedPrereqs.includes("EE416")) targetStudent.passedPrereqs = targetStudent.passedPrereqs.filter(x => x !== "EE416");
+        if (passGH152 && !targetStudent.passedPrereqs.includes("GH152")) targetStudent.passedPrereqs.push("GH152");
+        if (!passGH152 && targetStudent.passedPrereqs.includes("GH152")) targetStudent.passedPrereqs = targetStudent.passedPrereqs.filter(x => x !== "GH152");
+      }
+
+      saveStudentsLocally();
+      closeStudentModal();
+      selectStudent(currentStudentId);
+      renderStudentsList();
+      alert('✅ تم حفظ بيانات الطالب بنجاح!');
+    }
+
+    function deleteCurrentStudent() {
+      if (!currentStudentId) return;
+      if (confirm('حذف الطالب نهائياً من الجهاز؟')) {
+        students = students.filter(item => item.id !== currentStudentId);
+        saveStudentsLocally();
+        currentStudentId = students.length > 0 ? students[0].id : null;
+        renderStudentsList();
+        if (currentStudentId) selectStudent(currentStudentId); else clearDashboard();
+      }
+    }
+
+    function populateDropdown(track) {
+      const select = document.getElementById('courseSelectDropdown');
+      select.innerHTML = '<option value="">-- اختر المقرر --</option>';
+      const filtered = (track === "الكل" || !track) ? courses : courses.filter(c => c.track === track);
+      filtered.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.code; opt.textContent = `${c.code} - ${c.name} (${c.credits} وحدات)`;
+        select.appendChild(opt);
+      });
+    }
+    function filterCourses() { populateDropdown(document.getElementById('trackFilter').value); }
+
+    function updateDashboard(student) {
+      const tbody = document.getElementById('registeredTableBody');
+      tbody.innerHTML = '';
+      let totalCredits = 0;
+
+      if (!student.registered) student.registered = [];
+
+      student.registered.forEach((cCode, index) => {
+        const c = courses.find(item => item.code === cCode);
+        if (c) {
+          totalCredits += c.credits;
+          const weeklyHrs = calculateWeeklyHours(c.credits, c.isLab);
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td style="text-align:center;">${index + 1}</td><td><strong>${c.code}</strong></td><td>${c.name}</td><td style="text-align:center;"><strong>${c.credits}</strong></td><td style="text-align:center;"><span class="badge badge-info">${weeklyHrs} ساعات</span></td><td style="text-align:center;">${c.passingGrade || 50}</td><td>${c.prereq}</td><td><span class="badge badge-info">${c.track}</span></td><td style="text-align:center;"><button type="button" onclick="removeCourse('${c.code}')" class="btn btn-danger" style="padding:2px 6px; font-size:10px;">إلغاء</button></td>`;
+          tbody.appendChild(tr);
+        }
+      });
+      if (student.registered.length === 0) tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:#94a3b8;">لا توجد مقررات مسجلة</td></tr>`;
+
+      document.getElementById('registeredCreditsCount').textContent = totalCredits;
+      const overall = student.passedHours + totalCredits;
+      const gradPct = Math.min((overall / 154) * 100, 100);
+      document.getElementById('gradProgressBar').style.width = `${gradPct}%`;
+      document.getElementById('gradPercentText').textContent = `${Math.round(gradPct)}%`;
+      document.getElementById('totalProgressUnits').textContent = overall;
+      document.getElementById('remainingGradUnits').textContent = Math.max(154 - overall, 0);
+
+      const isAtRisk = (student.gpa || 0) < 2.00;
+      const maxLimit = isAtRisk ? 18 : 21;
+      const minLimit = isAtRisk ? 12 : 18;
+
+      const alert = document.getElementById('creditStatusAlert');
+      const bar = document.getElementById('creditBar');
+      const pct = Math.min((totalCredits / maxLimit) * 100, 100);
+      bar.style.width = `${pct}%`;
+      document.getElementById('percentageText').textContent = `${Math.round((totalCredits / maxLimit) * 100)}% (الحد الأقصى: ${maxLimit})`;
+
+      if (totalCredits > maxLimit) {
+        bar.style.background = "#ef4444";
+        alert.style.color = "#b91c1c";
+        alert.innerHTML = `⚠️ تجاوز الحد الأقصى المسموح (${totalCredits} > ${maxLimit} وحدة) ${isAtRisk ? 'للطلاب المتعثرين (GPA < 2.00)' : ''}.`;
+      } else if (totalCredits < minLimit && totalCredits > 0) {
+        if (student.hasDeptApproval) {
+          bar.style.background = "#9333ea";
+          alert.style.color = "#6b21a8";
+          alert.innerHTML = `ℹ️ إجمالي الوحدات (${totalCredits}) أقل من الحد الأدنى (${minLimit}) بموجب استثناء رئيس القسم.`;
+        } else {
+          bar.style.background = "#f59e0b";
+          alert.style.color = "#b45309";
+          alert.innerHTML = `⚠️ عدد الوحدات المسجلة (${totalCredits}) أقل من الحد الأدنى (${minLimit} وحدة).`;
+        }
+      } else if (totalCredits === 0) {
+        bar.style.background = "#cbd5e1";
+        alert.style.color = "#64748b";
+        alert.textContent = `لم يتم تنزيل مقررات بعد.`;
+      } else {
+        bar.style.background = "#10b981";
+        alert.style.color = "#15803d";
+        alert.innerHTML = `✔ إجمالي الوحدات المسجلة مستوفٍ للضوابط (${totalCredits} وحدة).`;
+      }
+    }
+
+    function addSelectedCourse() {
+      if (!currentStudentId) return;
+      const code = document.getElementById('courseSelectDropdown').value;
+      if (!code) return alert('اختر مقرراً');
+      const student = students.find(s => s.id === currentStudentId);
+      if (student.registered.includes(code)) return alert('المقرر مسجل مسبقاً');
+
+      const course = courses.find(c => c.code === code);
+      const isAtRisk = (student.gpa || 0) < 2.00;
+      const maxLimit = isAtRisk ? 18 : 21;
+
+      const currentTotalCredits = (student.registered || []).reduce((sum, cCode) => {
+        const c = courses.find(item => item.code === cCode);
+        return sum + (c ? c.credits : 0);
+      }, 0);
+
+      if (currentTotalCredits + course.credits > maxLimit && !student.hasDeptApproval) {
+        return showError(`⛔ حظر التنزيل: الطالب متعثر (GPA < 2.00) ولا يمكنه تجاوز الحد الأقصى (18 وحدة فصلياً). إجمالي الوحدات بعد الإضافة سيكون (${currentTotalCredits + course.credits}).`);
+      }
+
+      if (course.prereq && course.prereq !== "لا يوجد" && !student.hasDeptApproval) {
+        const reqs = (course.prereq.match(/[A-Z]{2,3}\d{3}[A-Z]?/g) || []);
+        const missing = reqs.filter(r => !(student.passedPrereqs || []).includes(r));
+        if (missing.length > 0) {
+          return showError(`⛔ حظر التنزيل: لم يتم اجتياز المواد الاستباقية (المتطلب السابق): (${missing.join(', ')}).`);
+        }
+      }
+
+      if (code === "EE599") {
+        if (student.passedHours < 125 || !(student.passedPrereqs || []).includes("EE416") || !(student.passedPrereqs || []).includes("GH152")) {
+          return showError('⛔ شرط مشروع التخرج غير متوفر (125 وحدة سابقة + اتصالات II + كتابة تقارير)');
+        }
+      }
+
+      hideError();
+      student.registered.push(code);
+      saveStudentsLocally();
+      updateDashboard(student); 
+      renderStudentsList();
+    }
+
+    function removeCourse(code) {
+      const student = students.find(s => s.id === currentStudentId);
+      student.registered = student.registered.filter(c => c !== code);
+      saveStudentsLocally();
+      updateDashboard(student); 
+      renderStudentsList();
+    }
+
+    function showError(msg) { const b = document.getElementById('addErrorMsg'); b.textContent = msg; b.style.display = 'block'; }
+    function hideError() { document.getElementById('addErrorMsg').style.display = 'none'; }
+
+    function openCourseManagerModal() { document.getElementById('courseManagerModal').classList.remove('hidden'); renderCourseManagerList(); }
+    function closeCourseManagerModal() { document.getElementById('courseManagerModal').classList.add('hidden'); populateDropdown(document.getElementById('trackFilter').value); if(currentStudentId) updateDashboard(students.find(s=>s.id===currentStudentId)); }
+    function renderCourseManagerList() {
+      const q = document.getElementById('courseSearchInput').value.trim().toLowerCase();
+      const tbody = document.getElementById('courseManagerTableBody'); tbody.innerHTML = '';
+      courses.filter(c => c.code.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)).forEach(c => {
+        const weeklyHrs = calculateWeeklyHours(c.credits, c.isLab);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td><strong>${c.code}</strong></td><td>${c.name}</td><td style="text-align:center;">${c.credits}</td><td style="text-align:center;"><span class="badge badge-info">${weeklyHrs} ساعات</span></td><td style="text-align:center;">${c.passingGrade || 50}</td><td>${c.prereq}</td><td>${c.track}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openPrintSeparateWindow() {
+      if (!currentStudentId) return;
+      const s = students.find(item => item.id === currentStudentId);
+      const totalCreditsSem = s.registered.reduce((sum, cCode) => sum + (courses.find(item => item.code === cCode)?.credits || 0), 0);
+      const overall = s.passedHours + totalCreditsSem;
+
+      let rows = "";
+      s.registered.forEach((cCode, idx) => {
+        const c = courses.find(item => item.code === cCode);
+        if (c) {
+          const weeklyHrs = calculateWeeklyHours(c.credits, c.isLab);
+          rows += `<tr><td style="border:1px solid #cbd5e1; text-align:center;">${idx+1}</td><td style="border:1px solid #cbd5e1;">${c.code}</td><td style="border:1px solid #cbd5e1;">${c.name}</td><td style="border:1px solid #cbd5e1; text-align:center;">${c.credits}</td><td style="border:1px solid #cbd5e1; text-align:center;">${weeklyHrs} ساعات</td><td style="border:1px solid #cbd5e1; text-align:center;">${c.passingGrade || 50}</td><td style="border:1px solid #cbd5e1;">${c.prereq}</td></tr>`;
+        }
+      });
+
+      const win = window.open('', '_blank', 'width=900,height=700');
+      if (!win) { alert('⚠️ تم حظر النافذة المنبثقة. يرجى السماح بالنوافذ المنبثقة ثم إعادة المحاولة.'); return; }
+      win.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>استمارة تسجيل - ${s.name}</title><style>body{font-family:Tahoma;padding:20px;direction:rtl;}table{width:100%;border-collapse:collapse;margin-top:15px;}th,td{border:1px solid #cbd5e1;padding:8px;font-size:12px;}th{background:#f1f5f9;}</style></head><body>
+        <div style="text-align:center;border-bottom:2px solid #000;padding-bottom:10px;">
+          <h3>جامعة طرابلس / كلية الهندسة</h3><h4>قسم الهندسة الكهربائية والإلكترونية</h4><p>استمارة تسجيل الطالب | ${currentSemester} ${currentAcadYear} م</p>
+        </div>
+        <p><strong>الطالب:</strong> ${s.name} | <strong>القيد:</strong> ${s.id} | <strong>الإجمالي:</strong> ${overall} / 154 وحدة</p>
+        <table><thead><tr><th>#</th><th>الرمز</th><th>المقرر</th><th>الوحدات</th><th>الساعات الأسبوعية</th><th>درجة النجاح</th><th>المتطلب</th></tr></thead><tbody>${rows}</tbody></table>
+        <p><strong>المشرف:</strong> ${currentAdvisor}</p>
+        <script>window.onload=()=>window.print();<\/script></body></html>`);
+      win.document.close();
+    }
+
+    /* ================= طبقة المزامنة السحابية (Firestore) ================= */
+    let db = null, auth = null, cloudReady = false, cloudUser = null;
+    let unsubStudents = null, unsubAdvisors = null;
+    let remoteIds = new Set();
+    let localWritePending = false;
+    let pushTimer = null;
+
+    function isCloudConfigured() {
+      return firebaseConfig && firebaseConfig.projectId && !String(firebaseConfig.projectId).startsWith('PUT_');
+    }
+
+    function setCloudStatus(state, text, userText) {
+      const dot = document.getElementById('cloudDot');
+      const txt = document.getElementById('cloudStatusText');
+      const usr = document.getElementById('cloudUserText');
+      const badge = document.getElementById('storageStatusBadge');
+      if (dot) dot.className = 'cloud-dot ' + state;
+      if (txt) txt.textContent = text;
+      if (usr) usr.textContent = userText || '';
+      if (badge) {
+        if (state === 'on') { badge.textContent = '☁️ مزامنة سحابية'; badge.className = 'badge badge-success'; }
+        else if (state === 'err') { badge.textContent = '⚠️ خطأ مزامنة'; badge.className = 'badge badge-danger'; }
+        else { badge.textContent = '💾 حفظ محلي'; badge.className = 'badge badge-info'; }
+      }
+      document.getElementById('cloudLoginBtn').style.display = (isCloudConfigured() && !cloudUser) ? 'inline-block' : 'none';
+      document.getElementById('cloudLogoutBtn').style.display = cloudUser ? 'inline-block' : 'none';
+      document.getElementById('cloudSyncBtn').style.display = cloudReady ? 'inline-block' : 'none';
+    }
+
+    function initCloud() {
+      if (!isCloudConfigured()) {
+        setCloudStatus('off', 'الوضع المحلي — البيانات محفوظة على هذا الجهاز فقط');
+        return;
+      }
+      try {
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+        db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
+        auth.onAuthStateChanged(user => {
+          cloudUser = user;
+          if (user) {
+            setCloudStatus('on', 'متصل بقاعدة البيانات السحابية — المزامنة لحظية', '| ' + (user.email || ''));
+            closeLoginModal();
+            attachListeners();
+          } else {
+            cloudReady = false;
+            detachListeners();
+            setCloudStatus('off', 'غير مسجل الدخول — يعمل محلياً');
+            openLoginModal();
+          }
+        });
+      } catch (e) {
+        setCloudStatus('err', 'تعذر تهيئة Firebase: ' + e.message);
+      }
+    }
+
+    function attachListeners() {
+      detachListeners();
+      unsubStudents = db.collection('students').onSnapshot(snap => {
+        remoteIds = new Set();
+        const remote = [];
+        snap.forEach(doc => { remoteIds.add(doc.id); remote.push(doc.data()); });
+        cloudReady = true;
+        if (localWritePending) return;
+        if (remote.length === 0 && students.length > 0) { cloudForcePush(); return; }
+        students = remote.map(r => ({ ...r, id: Number(r.id) }));
+        saveStudentsLocally();
+        if (!students.some(x => x.id === currentStudentId)) {
+          currentStudentId = students.length ? students[0].id : null;
+        }
+        renderStudentsList();
+        if (currentStudentId) selectStudent(currentStudentId); else clearDashboard();
+      }, err => setCloudStatus('err', 'خطأ في القراءة: ' + err.code));
+
+      unsubAdvisors = db.collection('settings').doc('advisors').onSnapshot(doc => {
+        if (localWritePending) return;
+        const d = doc.data();
+        if (d && Array.isArray(d.list) && d.list.length) {
+          advisors = d.list;
+          if (!advisors.includes(currentAdvisor)) currentAdvisor = advisors[0];
+          renderAdvisorSelect();
+        }
+      }, err => setCloudStatus('err', 'خطأ في القراءة: ' + err.code));
+    }
+
+    function detachListeners() {
+      if (unsubStudents) { unsubStudents(); unsubStudents = null; }
+      if (unsubAdvisors) { unsubAdvisors(); unsubAdvisors = null; }
+    }
+
+    async function cloudForcePush() {
+      if (!cloudReady || !db || !cloudUser) return;
+      localWritePending = true;
+      try {
+        const batch = db.batch();
+        const liveIds = new Set();
+        students.forEach(st => {
+          const id = String(st.id);
+          liveIds.add(id);
+          batch.set(db.collection('students').doc(id), JSON.parse(JSON.stringify({ ...st, id: Number(st.id) })));
+        });
+        remoteIds.forEach(rid => { if (!liveIds.has(rid)) batch.delete(db.collection('students').doc(rid)); });
+        batch.set(db.collection('settings').doc('advisors'), { list: advisors, updatedAt: Date.now() });
+        await batch.commit();
+        setCloudStatus('on', 'تمت المزامنة ✔ آخر رفع: ' + new Date().toLocaleTimeString('ar-LY'), '| ' + (cloudUser.email || ''));
+      } catch (e) {
+        setCloudStatus('err', 'فشل الرفع: ' + (e.code || e.message));
+      } finally {
+        setTimeout(() => { localWritePending = false; }, 400);
+      }
+    }
+
+    function schedulePush() {
+      if (!cloudReady) return;
+      localWritePending = true;
+      clearTimeout(pushTimer);
+      pushTimer = setTimeout(cloudForcePush, 700);
+    }
+
+    /* ربط الحفظ المحلي بالرفع السحابي دون المساس بمنطق المنظومة */
+    const _saveStudentsLocally = saveStudentsLocally;
+    saveStudentsLocally = function () { _saveStudentsLocally(); schedulePush(); };
+    const _saveAdvisorsLocally = saveAdvisorsLocally;
+    saveAdvisorsLocally = function () { _saveAdvisorsLocally(); schedulePush(); };
+
+    function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
+    function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
+    function showLoginError(msg) { const e = document.getElementById('loginError'); e.textContent = msg; e.style.display = 'block'; }
+
+    async function cloudSignIn() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPassword').value;
+      if (!email || !pass) return showLoginError('⚠️ أدخل البريد وكلمة المرور.');
+      try {
+        await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        await auth.signInWithEmailAndPassword(email, pass);
+        document.getElementById('loginPassword').value = '';
+        document.getElementById('loginError').style.display = 'none';
+      } catch (e) {
+        const map = {
+          'auth/invalid-credential': 'بيانات الدخول غير صحيحة.',
+          'auth/wrong-password': 'كلمة المرور غير صحيحة.',
+          'auth/user-not-found': 'لا يوجد حساب بهذا البريد.',
+          'auth/invalid-email': 'صيغة البريد غير صحيحة.',
+          'auth/network-request-failed': 'تعذر الاتصال بالشبكة.',
+          'auth/too-many-requests': 'محاولات كثيرة، انتظر قليلاً.'
+        };
+        showLoginError('⛔ ' + (map[e.code] || e.message));
+      }
+    }
+
+    async function cloudSignOut() {
+      if (!auth) return;
+      if (!confirm('تسجيل الخروج؟ ستبقى البيانات محفوظة محلياً على هذا الجهاز.')) return;
+      await auth.signOut();
+    }
+
+    /* ===== تسميات الجداول على الجوال (تحويل الصفوف إلى بطاقات) ===== */
+    function applyMobileLabels(tbody) {
+      const table = tbody.closest('table');
+      if (!table) return;
+      const heads = [...table.querySelectorAll('thead th')].map(th => th.textContent.trim());
+      tbody.querySelectorAll('tr').forEach(tr => {
+        [...tr.children].forEach((td, i) => {
+          if (heads[i] && !td.hasAttribute('colspan')) td.setAttribute('data-label', heads[i]);
+        });
+      });
+    }
+    function watchTables() {
+      const obs = new MutationObserver(muts => {
+        muts.forEach(m => { if (m.target.tagName === 'TBODY') applyMobileLabels(m.target); });
+      });
+      document.querySelectorAll('tbody').forEach(tb => {
+        applyMobileLabels(tb);
+        obs.observe(tb, { childList: true });
+      });
+    }
+
+    window.onload = function () {
+      init();
+      watchTables();
+      initCloud();
+    };
+  </script>
+</body>
+</html>

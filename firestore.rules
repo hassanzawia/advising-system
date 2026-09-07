@@ -1,0 +1,111 @@
+rules_version = '2';
+
+// ============================================================================
+//  قواعد أمان Cloud Firestore
+//  المشروع : advising-uot
+//  المنظومة: الإرشاد الأكاديمي - قسم الهندسة الكهربائية والإلكترونية
+//            كلية الهندسة - جامعة طرابلس
+//
+//  المبدأ: لا أحد يقرأ أو يكتب إلا عضو هيئة تدريس مسجّل الدخول،
+//          وكل مستند يُفحص بنيوياً قبل قبوله لمنع إفساد البيانات.
+// ============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- دوال مساعدة ----------
+
+    // مشرف أكاديمي مسجّل الدخول عبر Email/Password
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // البيانات القادمة في عملية الكتابة
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // التحقق من أن رقم القيد مكوّن من 8 أرقام بالضبط (مطابق لقاعدة الواجهة)
+    function validRegNumber(id) {
+      return id is string && id.matches('^[0-9]{8}$');
+    }
+
+    // ---------- سجلات الطلاب ----------
+    // معرّف المستند = رقم القيد كنص، ويجب أن يطابق الحقل id بداخله
+    match /students/{studentId} {
+
+      allow read: if signedIn();
+
+      allow create, update: if signedIn()
+        // معرّف المستند صالح (8 أرقام)
+        && validRegNumber(studentId)
+
+        // الحقول الإلزامية موجودة
+        && incoming().keys().hasAll([
+             'id', 'name', 'gpa', 'passedHours',
+             'passedPrereqs', 'registered'
+           ])
+
+        // لا حقول غريبة خارج نموذج المنظومة
+        && incoming().keys().hasOnly([
+             'id', 'name', 'major', 'gpa', 'passedHours', 'level',
+             'status', 'advisingNote', 'passedPrereqs', 'passedGrades',
+             'customPassedCourses', 'hasDeptApproval', 'registered'
+           ])
+
+        // تطابق معرّف المستند مع الحقل id (يمنع الكتابة في مستند طالب آخر)
+        && incoming().id is int
+        && string(incoming().id) == studentId
+
+        // الاسم: نص غير فارغ
+        && incoming().name is string
+        && incoming().name.size() > 0
+        && incoming().name.size() <= 120
+
+        // المعدل التراكمي ضمن مقياس كلية الهندسة (0.00 - 4.00)
+        && incoming().gpa is number
+        && incoming().gpa >= 0
+        && incoming().gpa <= 4
+
+        // الوحدات المنجزة لا تتجاوز متطلب التخرج (154 وحدة)
+        && incoming().passedHours is int
+        && incoming().passedHours >= 0
+        && incoming().passedHours <= 154
+
+        // القوائم من النوع الصحيح
+        && incoming().passedPrereqs is list
+        && incoming().registered is list
+
+        // حد أعلى منطقي يمنع إغراق قاعدة البيانات
+        && incoming().passedPrereqs.size() <= 120
+        && incoming().registered.size() <= 15
+
+        // الحقول الاختيارية إن وُجدت فنوعها صحيح
+        && (!('hasDeptApproval' in incoming()) || incoming().hasDeptApproval is bool)
+        && (!('major' in incoming())           || incoming().major is string)
+        && (!('level' in incoming())           || incoming().level is string)
+        && (!('status' in incoming())          || incoming().status is string)
+        && (!('advisingNote' in incoming())    || incoming().advisingNote is string)
+        && (!('passedGrades' in incoming())    || incoming().passedGrades is map)
+        && (!('customPassedCourses' in incoming()) || incoming().customPassedCourses is list);
+
+      allow delete: if signedIn();
+    }
+
+    // ---------- إعدادات المنظومة (قائمة المشرفين الأكاديميين) ----------
+    match /settings/advisors {
+      allow read: if signedIn();
+      allow write: if signedIn()
+        && incoming().keys().hasOnly(['list', 'updatedAt'])
+        && incoming().list is list
+        && incoming().list.size() > 0
+        && incoming().list.size() <= 60;
+    }
+
+    // ---------- الإغلاق الافتراضي ----------
+    // أي مسار لم يُذكر أعلاه ممنوع تماماً على الجميع
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
