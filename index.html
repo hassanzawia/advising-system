@@ -385,7 +385,6 @@
                 <th style="text-align:center;">وحدات</th>
                 <th style="text-align:center;">الساعات الأسبوعية</th>
                 <th style="text-align:center; width:100px;">الدرجة (50-100)</th>
-                <th style="text-align:center; width:60px;">التقدير</th>
                 <th style="text-align:center; width:70px;">النقاط</th>
                 <th style="text-align:center; width:85px;">النظام الدراسي</th>
                 <th style="text-align:center; width:95px;">العام الجامعي</th>
@@ -546,7 +545,7 @@
       {"code": "GH150", "name": "لغة عربية I", "nameEn": "Arabic Language I", "credits": 2, "lec": 2, "tut": 1, "lab": 0, "weeklyHours": 3, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "semester": 1, "level": 1},
       {"code": "GH141", "name": "لغة انجليزية I", "nameEn": "English Language I", "credits": 3, "lec": 3, "tut": 1, "lab": 0, "weeklyHours": 4, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "semester": 1, "level": 1},
       {"code": "GS199", "name": "مقدمة حاسب آلي", "nameEn": "Introduction to Computer", "credits": 2, "lec": 2, "tut": 2, "lab": 0, "weeklyHours": 4, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "semester": 1, "level": 1},
-      {"code": "GE206", "name": "الإحصاء والاحتمالات", "nameEn": "Probability & Statistics", "credits": 3, "lec": 3, "tut": 1, "lab": 0, "weeklyHours": 4, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "semester": 1, "level": 1},
+      {"code": "GE206", "name": "الإحصاء والاحتمالات", "nameEn": "Probability & Statistics", "credits": 3, "lec": 3, "tut": 1, "lab": 0, "weeklyHours": 4, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة الكهربائية", "semester": 3, "level": 2},
       {"code": "GH198", "name": "الثقافة الوطنية", "nameEn": "National Culture", "credits": 2, "lec": 2, "tut": 0, "lab": 0, "weeklyHours": 2, "isLab": false, "passingGrade": 50, "prereq": "لا يوجد", "track": "المرحلة العامة", "semester": 1, "level": 1},
       {"code": "GS102", "name": "رياضة II", "nameEn": "Mathematics II", "credits": 3, "lec": 3, "tut": 1, "lab": 0, "weeklyHours": 4, "isLab": false, "passingGrade": 50, "prereq": "GS101", "track": "المرحلة العامة", "semester": 2, "level": 1},
       {"code": "GS112", "name": "فيزياء II", "nameEn": "Physics II", "credits": 3, "lec": 3, "tut": 1, "lab": 0, "weeklyHours": 4, "isLab": false, "passingGrade": 50, "prereq": "GS111", "track": "المرحلة العامة", "semester": 2, "level": 1},
@@ -910,8 +909,8 @@
     function closePolicyModal() { document.getElementById('policyModal').classList.add('hidden'); }
 
     /* حساب الفصول الدراسية المنجزة بمطابقة الوحدات المنجزة مع مجاميع الخطة الرسمية
-       (18، 18، 18، 18، 19، 17، 17، 14، 15، 3 = 157 وحدة) */
-    const SEMESTER_CREDITS = [18, 18, 18, 18, 19, 17, 17, 14, 15, 3];
+       (15، 18، 21، 18، 19، 17، 17، 14، 15، 3 = 157 وحدة؛ بعد نقل GE206 إلى الفصل الثالث) */
+    const SEMESTER_CREDITS = [15, 18, 21, 18, 19, 17, 17, 14, 15, 3];
     function calculateCompletedSemesters(passedHours) {
       const h = Number(passedHours) || 0;
       let acc = 0, done = 0;
@@ -1043,7 +1042,7 @@
           const semCourses = courses.filter(x => ((typeof x.semester === 'number') ? x.semester : 0) === semKey);
           const semCr = semCourses.reduce((a, x) => a + x.credits, 0);
           const hdr = document.createElement('tr');
-          hdr.innerHTML = `<td colspan="14" style="background:#0b2545; color:#fff; font-weight:800; font-size:11px; padding:6px 12px;">${SEMESTER_NAMES[semKey]} — ${semCr} وحدة (${semCourses.length} مقرر)</td>`;
+          hdr.innerHTML = `<td colspan="13" style="background:#0b2545; color:#fff; font-weight:800; font-size:11px; padding:6px 12px;">${SEMESTER_NAMES[semKey]} — ${semCr} وحدة (${semCourses.length} مقرر)</td>`;
           hdr.className = "semester-header-row";
           hdr.dataset.semkey = semKey;
           tbody.appendChild(hdr);
@@ -1055,7 +1054,6 @@
 
         const gPoints = gradeVal !== '' ? getEngineeringGpaPoints(gradeVal) : 0;
         const gPointsTotal = gPoints * c.credits;
-        const gLetter = gradeVal !== '' ? gradeToLetter(gradeVal) : '—';
 
         // النظام الدراسي والعام الجامعي: تُقرأ من سجل الطالب إن أُدخلت سابقاً،
         // وإلا تُملأ تلقائياً بالفصل/العام المختارين حالياً من الشريط العلوي (قابلة للتعديل يدوياً بحرية)
@@ -1079,7 +1077,6 @@
           <td style="text-align:center;"><strong>${c.credits}</strong></td>
           <td style="text-align:center;"><span class="badge badge-info" title="نظري + تمارين + عملي">${weeklyHrs} س${hb ? ' (' + hb + ')' : ''}</span></td>
           <td style="text-align:center;"><input type="number" min="50" max="100" class="form-input course-grade-input" data-code="${c.code}" value="${gradeVal}" ${isPassed ? '' : 'disabled'} style="text-align:center; width:90px;" onchange="onGradeCellChange(this)"></td>
-          <td style="text-align:center;"><span class="badge badge-purple letter-cell">${isPassed ? gLetter : '—'}</span></td>
           <td style="text-align:center; font-weight:700;" class="points-cell">${isPassed ? gPointsTotal.toFixed(2) : '--'}</td>
           <td style="text-align:center;"><select class="form-select term-system-select" data-code="${c.code}" ${isPassed ? '' : 'disabled'} style="width:78px; font-size:11px; padding:4px;">${termSelectOpts}</select></td>
           <td style="text-align:center;"><input type="text" class="form-input term-year-input" data-code="${c.code}" value="${termYear}" ${isPassed ? '' : 'disabled'} placeholder="${formatAcademicYear(currentAcadYear)}" style="width:88px; font-size:11px; text-align:center;"></td>
@@ -1094,7 +1091,6 @@
       s.customPassedCourses.forEach((cc, idx) => {
         const customWeeklyHrs = cc.weeklyHours || calculateWeeklyHours(cc.credits, false);
         const ccPoints = getEngineeringGpaPoints(cc.grade);
-        const ccLetter = gradeToLetter(cc.grade);
         // النظام/العام يُملآن تلقائياً بالاختيار الحالي إن لم يُدخلا سابقاً لهذا المقرر المحوّل
         const ccTermSystem = cc.termSystem || currentSemester;
         const ccTermYear = cc.termYear || formatAcademicYear(currentAcadYear);
@@ -1114,7 +1110,6 @@
           <td style="text-align:center;"><strong>${cc.credits}</strong></td>
           <td style="text-align:center;"><span class="badge badge-info">${customWeeklyHrs} ساعات</span></td>
           <td style="text-align:center;"><input type="number" min="50" max="100" class="form-input custom-grade-input" data-index="${idx}" value="${cc.grade}" style="text-align:center; width:90px;" onchange="onGradeCellChange(this)"></td>
-          <td style="text-align:center;"><span class="badge badge-purple letter-cell">${ccLetter}</span></td>
           <td style="text-align:center; font-weight:700;" class="points-cell">${(ccPoints * cc.credits).toFixed(2)}</td>
           <td style="text-align:center;"><select class="form-select custom-term-system-select" data-index="${idx}" style="width:78px; font-size:11px; padding:4px;">${ccSelectOpts}</select></td>
           <td style="text-align:center;"><input type="text" class="form-input custom-term-year-input" data-index="${idx}" value="${ccTermYear}" placeholder="${formatAcademicYear(currentAcadYear)}" style="width:88px; font-size:11px; text-align:center;"></td>
@@ -1159,7 +1154,7 @@
         const label = key === 'custom' ? 'مقررات محوّلة/إضافية' : (SEMESTER_NAMES[key] || key);
         const tr = document.createElement('tr');
         tr.className = 'semester-summary-row';
-        tr.innerHTML = `<td colspan="14" style="background:#eef2ff; border-top:2px solid #c7d2fe; border-bottom:2px solid #c7d2fe; padding:7px 12px; font-size:11px; font-weight:800; color:#312e81;">
+        tr.innerHTML = `<td colspan="13" style="background:#eef2ff; border-top:2px solid #c7d2fe; border-bottom:2px solid #c7d2fe; padding:7px 12px; font-size:11px; font-weight:800; color:#312e81;">
             📐 ملخص ${label}: مجموع الوحدات = ${g.credits} &nbsp;|&nbsp; مجموع النقاط = ${g.points.toFixed(2)} &nbsp;|&nbsp; المعدل الفصلي = ${gpa.toFixed(2)}
           </td>`;
         g.lastRow.after(tr);
@@ -1184,26 +1179,23 @@
       const gpa = credits > 0 ? (points / credits) : 0;
       const tr = document.createElement('tr');
       tr.className = 'cumulative-summary-row';
-      tr.innerHTML = `<td colspan="14" style="background:#0b2545; color:#fff; padding:10px 12px; font-size:12px; font-weight:900;">
+      tr.innerHTML = `<td colspan="13" style="background:#0b2545; color:#fff; padding:10px 12px; font-size:12px; font-weight:900;">
           🎓 الإجمالي التراكمي: الوحدات = ${credits} &nbsp;|&nbsp; النقاط = ${points.toFixed(2)} &nbsp;|&nbsp; المعدل التراكمي = ${gpa.toFixed(2)}%
         </td>`;
       tbody.appendChild(tr);
     }
 
-    // إعادة حساب التقدير/النقاط/الملخصات لحظياً عند تعديل أي درجة (دون إغلاق النافذة)
+    // إعادة حساب النقاط (= الدرجة × الوحدات) والملخصات لحظياً عند تعديل أي درجة (دون إغلاق النافذة)
     function onGradeCellChange(input) {
       const row = input.closest('tr');
       const grade = parseFloat(input.value);
-      const letterCell = row.querySelector('.letter-cell');
       const pointsCell = row.querySelector('.points-cell');
       const credits = Number(row.dataset.credits) || 0;
       if (isNaN(grade) || grade < 50 || grade > 100) {
-        if (letterCell) letterCell.textContent = '—';
         if (pointsCell) pointsCell.textContent = '--';
       } else {
-        const pts = getEngineeringGpaPoints(grade);
-        if (letterCell) letterCell.textContent = gradeToLetter(grade);
-        if (pointsCell) pointsCell.textContent = (pts * credits).toFixed(2);
+        const pts = getEngineeringGpaPoints(grade); // نقاط الوحدة = الدرجة نفسها
+        if (pointsCell) pointsCell.textContent = (pts * credits).toFixed(2); // النقاط = الدرجة × الوحدات
       }
       const tbody = row.closest('tbody');
       insertSemesterSummaries(tbody);
@@ -1875,7 +1867,6 @@
             <td>${it.code}</td><td style="text-align:right;">${it.name}</td>
             <td style="text-align:center;">${it.credits}</td>
             <td style="text-align:center;">${it.grade}</td>
-            <td style="text-align:center;">${gradeToLetter(it.grade)}</td>
             <td style="text-align:center;">${total.toFixed(2)}</td>
             <td style="text-align:center;">${it.term}</td>
           </tr>`;
@@ -1887,7 +1878,7 @@
           <div style="margin-top:14px;">
             <div style="background:#0b2545; color:#fff; padding:5px 10px; font-weight:bold; font-size:12px;">${SEMESTER_NAMES[k]}</div>
             <table>
-              <thead><tr><th>رمز المقرر</th><th>اسم المقرر</th><th>الوحدات</th><th>الدرجة</th><th>التقدير</th><th>النقاط</th><th>النظام الدراسي / العام الجامعي</th></tr></thead>
+              <thead><tr><th>رمز المقرر</th><th>اسم المقرر</th><th>الوحدات</th><th>الدرجة</th><th>النقاط</th><th>النظام الدراسي / العام الجامعي</th></tr></thead>
               <tbody>${rows}</tbody>
             </table>
             <table style="margin-top:2px;">
@@ -1914,7 +1905,6 @@
             <td>${it.code}</td><td style="text-align:right;">${it.name}</td>
             <td style="text-align:center;">${it.credits}</td>
             <td style="text-align:center;">${it.grade}</td>
-            <td style="text-align:center;">${gradeToLetter(it.grade)}</td>
             <td style="text-align:center;">${total.toFixed(2)}</td>
             <td style="text-align:center;">${it.term}</td>
           </tr>`;
@@ -1925,7 +1915,7 @@
           <div style="margin-top:14px;">
             <div style="background:#065f46; color:#fff; padding:5px 10px; font-weight:bold; font-size:12px;">مقررات محوّلة / إضافية (خارج الخطة)</div>
             <table>
-              <thead><tr><th>رمز المقرر</th><th>اسم المقرر</th><th>الوحدات</th><th>الدرجة</th><th>التقدير</th><th>النقاط</th><th>النظام الدراسي / العام الجامعي</th></tr></thead>
+              <thead><tr><th>رمز المقرر</th><th>اسم المقرر</th><th>الوحدات</th><th>الدرجة</th><th>النقاط</th><th>النظام الدراسي / العام الجامعي</th></tr></thead>
               <tbody>${rows}</tbody>
             </table>
             <table style="margin-top:2px;">
