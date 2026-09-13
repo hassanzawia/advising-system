@@ -208,7 +208,7 @@
           </div>
 
           <div class="stats-row">
-            <div class="stat-box"><span class="stat-label">المعدل (GPA)</span><span class="stat-value" id="cardGpa">--</span></div>
+            <div class="stat-box"><span class="stat-label">المعدل (%)</span><span class="stat-value" id="cardGpa">--</span></div>
             <div class="stat-box"><span class="stat-label">الوحدات السابقة</span><span class="stat-value" id="cardPassedHours">--</span></div>
             <div class="stat-box"><span class="stat-label">المستوى</span><span class="stat-value" id="cardLevel" style="color:#1d4ed8;">--</span></div>
             <div class="stat-box" title="عدد الفصول الدراسية المنجزة من أصل 10 فصول في الخطة"><span class="stat-label">الفصول المنجزة</span><span class="stat-value" id="cardSemesters" style="color:#7c3aed;">--</span></div>
@@ -345,7 +345,7 @@
     <div class="modal-content modal-content-large">
       <div class="modal-header"><h3>📜 استمارة طالب بقسم الهندسة الكهربائية والإلكترونية (كلية الهندسة - جامعة الزيتونة)</h3><button type="button" class="modal-close" onclick="closePolicyModal()">&times;</button></div>
       <div class="modal-body" style="line-height:1.6;">
-        <p><strong>جامعة الزيتونة / كلية الهندسة</strong> - قسم الهندسة الكهربائية والإلكترونية.<br>• إجمالي متطلبات التخرج: <strong>157 وحدة دراسية كحد أقصى</strong>.<br>• <strong>الساعات الأسبوعية:</strong> تُقرأ من الخطة الرسمية بصيغة (نظري + تمارين + عملي).<br>• <strong>الخطة:</strong> 10 فصول دراسية، 56 مقرراً إلزامياً + مادتان اختياريتان.<br>• <strong>تسلسل التسجيل:</strong> لا يمكن تسجيل مقرر من فصل معيّن قبل إنجاز 70% على الأقل من وحدات الفصل الذي يسبقه مباشرة (بالإضافة إلى المتطلبات السابقة الصريحة). المواد الاختيارية غير مقيّدة بفصل محدد. يمكن لرئيس القسم استثناء هذا الشرط عبر "استثناء معتمد خطياً".<br>• إدخال جميع المقررات الدراسية وتعديل درجاتها بمرونة تامة.</p>
+        <p><strong>جامعة الزيتونة / كلية الهندسة</strong> - قسم الهندسة الكهربائية والإلكترونية.<br>• إجمالي متطلبات التخرج: <strong>157 وحدة دراسية كحد أقصى</strong>.<br>• <strong>الساعات الأسبوعية:</strong> تُقرأ من الخطة الرسمية بصيغة (نظري + تمارين + عملي).<br>• <strong>الخطة:</strong> 10 فصول دراسية (5 مستويات، كل مستوى = فصلان)، 56 مقرراً إلزامياً + مادتان اختياريتان.<br>• <strong>نظام النقاط والمعدل:</strong> نقاط المقرر = الدرجة المئوية × عدد الوحدات. المعدل الفصلي/التراكمي = مجموع النقاط ÷ مجموع الوحدات (نسبة مئوية من 0 إلى 100)، مطابقاً لكشف الدرجات الرسمي. التفوق عند معدل ≥ 75%، والتعثر الأكاديمي عند معدل أقل من 50%.<br>• <strong>تسلسل التسجيل:</strong> لا يمكن تسجيل مقرر من مستوى معيّن قبل إنجاز 70% على الأقل من وحدات المستوى الذي يسبقه مباشرة (بالإضافة إلى المتطلبات السابقة الصريحة). داخل المستوى الواحد (فصلاه الاثنان) حرية اختيار كاملة. المواد الاختيارية غير مقيّدة بمستوى محدد. يمكن لرئيس القسم استثناء هذا الشرط عبر "استثناء معتمد خطياً".<br>• إدخال جميع المقررات الدراسية وتعديل درجاتها بمرونة تامة.</p>
       </div>
       <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closePolicyModal()">إغلاق</button></div>
     </div>
@@ -467,7 +467,7 @@
           <div class="form-group"><label>الشعبة:</label><input type="text" id="modalStudentMajor" class="form-input" value="شعبة الاتصالات"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>المعدل التراكمي (GPA):</label><input type="number" step="0.01" id="modalStudentGpa" class="form-input" value="3.00" readonly style="background:#f1f5f9;" title="يُحسب آلياً من نافذة الدرجات"></div>
+          <div class="form-group"><label>المعدل التراكمي (%):</label><input type="number" step="0.01" id="modalStudentGpa" class="form-input" value="75.00" readonly style="background:#f1f5f9;" title="يُحسب آلياً من نافذة الدرجات"></div>
           <div class="form-group"><label>المستوى الدراسي (يُحسب آلياً):</label><input type="text" id="modalStudentLevelDisplay" class="form-input" value="المستوى 4" readonly style="background:#f1f5f9;" title="يُحسب آلياً بناءً على الوحدات المنجزة"></div>
         </div>
         <div class="form-row">
@@ -730,7 +730,7 @@
           id: 20240112,
           name: "طارق مفتاح البوعيشي",
           major: "شعبة الاتصالات",
-          gpa: 3.25,
+          gpa: 76.56,
           passedHours: 126,
           level: "المستوى 4",
           status: "منتظم",
@@ -933,51 +933,76 @@
       return "المستوى 1";
     }
 
-    // مقياس تحويل الدرجات إلى نقاط وفق لائحة كلية الهندسة (سقف 4.00)
-    const GRADE_SCALE = [
-      { min: 90, points: 4.00, letter: 'أ'  }, { min: 85, points: 3.75, letter: 'أ-' },
-      { min: 80, points: 3.50, letter: 'ب+' }, { min: 75, points: 3.00, letter: 'ب'  },
-      { min: 70, points: 2.50, letter: 'ب-' }, { min: 65, points: 2.25, letter: 'ج+' },
-      { min: 60, points: 2.00, letter: 'ج'  }, { min: 55, points: 1.75, letter: 'ج-' },
-      { min: 50, points: 1.50, letter: 'د+' }, { min: 45, points: 1.00, letter: 'د'  },
-      { min: 0,  points: 0.00, letter: 'هـ' }
-    ];
+    /* ===== نظام النقاط الرسمي (مطابق لكشف درجات جامعة الزيتونة) =====
+       النقاط لكل مقرر = الدرجة المئوية × عدد الوحدات (مثال: 66 × 3 = 198)
+       المعدل الفصلي/التراكمي = مجموع النقاط ÷ مجموع الوحدات (نسبة مئوية 0-100)
+       لا يوجد تحويل إلى مقياس GPA (4.00)؛ الدرجة المئوية نفسها هي أساس الحساب. */
     function getEngineeringGpaPoints(grade) {
+      // "نقاط الوحدة الواحدة" = الدرجة المئوية ذاتها؛ النقطة الكلية للمقرر = هذه القيمة × الوحدات
       const g = Number(grade);
       if (isNaN(g) || g < 0 || g > 100) return 0;
-      return (GRADE_SCALE.find(b => g >= b.min) || { points: 0 }).points;
+      return g;
     }
+    // تقدير نوعي إرشادي مبني على الدرجة المئوية (لا يدخل في حساب المعدل، للعرض فقط)
+    const QUALITATIVE_SCALE = [
+      { min: 90, letter: 'ممتاز' },
+      { min: 80, letter: 'جيد جداً' },
+      { min: 70, letter: 'جيد' },
+      { min: 60, letter: 'مقبول' },
+      { min: 50, letter: 'ضعيف' },
+      { min: 0,  letter: 'راسب' }
+    ];
     function gradeToLetter(grade) {
       const g = Number(grade);
       if (isNaN(g) || g < 0 || g > 100) return '—';
-      return (GRADE_SCALE.find(b => g >= b.min) || { letter: '—' }).letter;
+      return (QUALITATIVE_SCALE.find(b => g >= b.min) || { letter: '—' }).letter;
     }
 
-    /* ضوابط العبء: 12 حد أدنى | 18 عادي | 21 للمتفوقين (معدل ≥ 3.00 = 75%) */
-    const LOAD_RULES = { MIN: 12, NORMAL_MAX: 18, EXCELLENCE_MAX: 21, EXCELLENCE_GPA: 3.00 };
+    /* ضوابط العبء: 12 حد أدنى | 18 عادي | 21 للمتفوقين (معدل ≥ 75%)
+       ضوابط الحالة الأكاديمية: معدل تراكمي أقل من 50% = متعثر (النسبة المئوية هي المعدل نفسه الآن) */
+    const LOAD_RULES = { MIN: 12, NORMAL_MAX: 18, EXCELLENCE_MAX: 21, EXCELLENCE_GPA: 75 };
+    const AT_RISK_THRESHOLD = 50;
     function isExcellentStudent(gpa) { return Number(gpa) >= LOAD_RULES.EXCELLENCE_GPA; }
+    function isAtRiskGpa(gpa) { return Number(gpa) < AT_RISK_THRESHOLD; }
     function getMaxLoad(gpa) { return isExcellentStudent(gpa) ? LOAD_RULES.EXCELLENCE_MAX : LOAD_RULES.NORMAL_MAX; }
 
-    /* ===== تسلسل التسجيل حسب الفصل الدراسي =====
-       يمنع تسجيل مقرر من فصل N قبل إنجاز 70% على الأقل من وحدات الفصل N-1.
+    /* ===== تسلسل التسجيل حسب المستوى الدراسي (كل مستوى = سنتان دراسيتان / فصلان) =====
+       المستوى 1 ↔ الفصلان 1،2  |  المستوى 2 ↔ 3،4  |  المستوى 3 ↔ 5،6
+       المستوى 4 ↔ 7،8          |  المستوى 5 ↔ 9،10
+       يمنع تسجيل مقرر من مستوى N قبل إنجاز 70% على الأقل من وحدات المستوى N-1.
        المتطلبات السابقة الصريحة (المذكورة في الخطة) تبقى شرطاً منفصلاً وأساسياً.
-       المواد الاختيارية (semester = 0) لا تخضع لهذا الشرط، وللطالب حرية اختيارها
-       ضمن أي فصل. وداخل الفصل نفسه، حرية اختيار كاملة بلا ترتيب إلزامي. */
+       المواد الاختيارية (semester = 0) لا تخضع لهذا الشرط. وداخل المستوى نفسه
+       (فصلاه الاثنان)، حرية اختيار كاملة بلا ترتيب إلزامي بين المقررات. */
     const SEMESTER_UNLOCK_RATIO = 0.70;
+    const LEVEL_SEMESTERS = { 1: [1, 2], 2: [3, 4], 3: [5, 6], 4: [7, 8], 5: [9, 10] };
 
-    function creditsCompletedForSemester(student, semNum) {
+    function semesterToLevel(semNum) {
+      for (const lvl in LEVEL_SEMESTERS) {
+        if (LEVEL_SEMESTERS[lvl].includes(semNum)) return Number(lvl);
+      }
+      return null; // فصل غير مرتبط بأي مستوى (مثل المواد الاختيارية 0)
+    }
+
+    function creditsForLevel(level) {
+      const sems = LEVEL_SEMESTERS[level] || [];
+      return courses.filter(c => sems.includes(c.semester)).reduce((sum, c) => sum + c.credits, 0);
+    }
+
+    function creditsCompletedForLevel(student, level) {
       const passed = student.passedPrereqs || [];
+      const sems = LEVEL_SEMESTERS[level] || [];
       return courses
-        .filter(c => c.semester === semNum && passed.includes(c.code))
+        .filter(c => sems.includes(c.semester) && passed.includes(c.code))
         .reduce((sum, c) => sum + c.credits, 0);
     }
 
-    function checkSemesterSequence(student, semNum) {
-      if (!semNum || semNum <= 1) return { ok: true };
-      const prevSem = semNum - 1;
-      const prevTotal = courses.filter(c => c.semester === prevSem).reduce((sum, c) => sum + c.credits, 0);
+    function checkLevelSequence(student, semNum) {
+      const level = semesterToLevel(semNum);
+      if (!level || level <= 1) return { ok: true }; // المستوى الأول مفتوح دوماً؛ فصل بلا مستوى (اختياري) غير مقيّد
+      const prevLevel = level - 1;
+      const prevTotal = creditsForLevel(prevLevel);
       if (prevTotal === 0) return { ok: true };
-      const done = creditsCompletedForSemester(student, prevSem);
+      const done = creditsCompletedForLevel(student, prevLevel);
       const ratio = done / prevTotal;
       if (ratio >= SEMESTER_UNLOCK_RATIO) return { ok: true };
       return {
@@ -985,8 +1010,8 @@
         done, prevTotal,
         neededPct: Math.round(SEMESTER_UNLOCK_RATIO * 100),
         havePct: Math.round(ratio * 100),
-        prevSemName: (typeof SEMESTER_NAMES !== 'undefined' && SEMESTER_NAMES[prevSem]) || `الفصل ${prevSem}`,
-        curSemName: (typeof SEMESTER_NAMES !== 'undefined' && SEMESTER_NAMES[semNum]) || `الفصل ${semNum}`
+        prevLevelName: `المستوى ${prevLevel}`,
+        curLevelName: `المستوى ${level}`
       };
     }
 
@@ -1155,12 +1180,12 @@
         const ptsCell = r.querySelector('.points-cell');
         points += ptsCell ? (parseFloat(ptsCell.textContent) || 0) : 0;
       });
+      // المعدل التراكمي = مجموع النقاط ÷ مجموع الوحدات (نسبة مئوية 0-100 مباشرة، لا تحويل)
       const gpa = credits > 0 ? (points / credits) : 0;
-      const pct = ((gpa / 4) * 100).toFixed(1);
       const tr = document.createElement('tr');
       tr.className = 'cumulative-summary-row';
       tr.innerHTML = `<td colspan="14" style="background:#0b2545; color:#fff; padding:10px 12px; font-size:12px; font-weight:900;">
-          🎓 الإجمالي التراكمي: الوحدات = ${credits} &nbsp;|&nbsp; النقاط = ${points.toFixed(2)} &nbsp;|&nbsp; المعدل التراكمي (GPA) = ${gpa.toFixed(2)} &nbsp;|&nbsp; النسبة = ${pct}%
+          🎓 الإجمالي التراكمي: الوحدات = ${credits} &nbsp;|&nbsp; النقاط = ${points.toFixed(2)} &nbsp;|&nbsp; المعدل التراكمي = ${gpa.toFixed(2)}%
         </td>`;
       tbody.appendChild(tr);
     }
@@ -1336,9 +1361,9 @@
         s.gpa = 0.00;
       }
 
-      const isAtRisk = s.gpa < 2.00;
+      const isAtRisk = isAtRiskGpa(s.gpa);
       s.status = isAtRisk ? "متعثر" : "منتظم";
-      s.advisingNote = isAtRisk ? "⚠️ طالب متعثر: المعدل التراكمي أقل من 2.00." : "طالب منتظم.";
+      s.advisingNote = isAtRisk ? `⚠️ طالب متعثر: المعدل التراكمي أقل من ${AT_RISK_THRESHOLD}%.` : "طالب منتظم.";
 
       saveStudentsLocally();
       closePassedCoursesModal();
@@ -1403,7 +1428,7 @@
           return sum + (c ? c.credits : 0);
         }, 0);
         
-        const isAtRisk = (s.gpa || 0) < 2.00;
+        const isAtRisk = isAtRiskGpa(s.gpa || 0);
         s.status = isAtRisk ? "متعثر" : "منتظم";
         if (!s.level) s.level = calculateAutomaticLevel(s.passedHours || 0);
 
@@ -1420,7 +1445,7 @@
       const s = students.find(item => item.id === id);
       if (!s) return;
       
-      const isAtRisk = (s.gpa || 0) < 2.00;
+      const isAtRisk = isAtRiskGpa(s.gpa || 0);
       s.status = isAtRisk ? "متعثر" : "منتظم";
       if (!s.level) s.level = calculateAutomaticLevel(s.passedHours || 0);
 
@@ -1440,7 +1465,7 @@
         badgeEl.className = 'badge badge-success';
       }
       document.getElementById('policyCreditsRange').textContent = `${LOAD_RULES.MIN} - ${getMaxLoad(gpaVal)}`;
-      document.getElementById('cardGpa').textContent = (s.gpa || 0).toFixed(2);
+      document.getElementById('cardGpa').textContent = (s.gpa || 0).toFixed(2) + '%';
       document.getElementById('cardPassedHours').textContent = `${s.passedHours || 0} و`;
       document.getElementById('cardLevel').textContent = s.level;
       const semInfo = calculateCompletedSemesters(s.passedHours || 0);
@@ -1449,7 +1474,7 @@
       semEl.title = semInfo.done >= semInfo.total
         ? 'أنجز جميع فصول الخطة'
         : `أنجز ${semInfo.done} فصلاً — يدرس حالياً في الفصل ${semInfo.current}`;
-      document.getElementById('cardAdvisingNotes').textContent = s.advisingNote || (isAtRisk ? "⚠️ طالب متعثر: معدله أقل من 2.00، الحد الأقصى للتسجيل 18 وحدة." : "طالب منتظم.");
+      document.getElementById('cardAdvisingNotes').textContent = s.advisingNote || (isAtRisk ? `⚠️ طالب متعثر: معدله أقل من ${AT_RISK_THRESHOLD}%، الحد الأقصى للتسجيل 18 وحدة.` : "طالب منتظم.");
       document.getElementById('deptHeadApprovalCheck').checked = !!s.hasDeptApproval;
       document.getElementById('approvalBadge').style.display = s.hasDeptApproval ? 'inline-block' : 'none';
 
@@ -1497,7 +1522,7 @@
       document.getElementById('modalStudentIsNew').value = 'true';
       document.getElementById('modalStudentName').value = '';
       document.getElementById('modalStudentId').value = '';
-      document.getElementById('modalStudentGpa').value = '3.00';
+      document.getElementById('modalStudentGpa').value = '75.00';
       document.getElementById('modalStudentPassedHours').value = 0;
       document.getElementById('modalStudentLevelDisplay').value = 'المستوى 1';
       document.getElementById('modalPassEE416').checked = false;
@@ -1547,7 +1572,7 @@
         const prereqs = ["GS101"];
         if (passEE416) prereqs.push("EE416");
         if (passGH152) prereqs.push("GH152");
-        targetStudent = { id, name, major: "شعبة الاتصالات", gpa: 3.00, passedHours: 0, level: "المستوى 1", status: "منتظم", advisingNote: "", passedPrereqs: prereqs, passedGrades: {}, customPassedCourses: [], hasDeptApproval: false, registered: [] };
+        targetStudent = { id, name, major: "شعبة الاتصالات", gpa: 75.00, passedHours: 0, level: "المستوى 1", status: "منتظم", advisingNote: "", passedPrereqs: prereqs, passedGrades: {}, customPassedCourses: [], hasDeptApproval: false, registered: [] };
         students.push(targetStudent);
         currentStudentId = id;
       } else {
@@ -1668,7 +1693,7 @@
       } else if (totalCredits > maxLimit) {
         bar.style.background = "#ef4444";
         alert.style.color = "#b91c1c";
-        alert.innerHTML = `⛔ ${totalCredits} وحدة تتجاوز الحد العادي (${LOAD_RULES.NORMAL_MAX} وحدة). التسجيل حتى ${LOAD_RULES.EXCELLENCE_MAX} وحدة للمتفوقين فقط (معدل ≥ ${LOAD_RULES.EXCELLENCE_GPA.toFixed(2)} أي 75%). المعدل الحالي: ${gpaNow.toFixed(2)}`;
+        alert.innerHTML = `⛔ ${totalCredits} وحدة تتجاوز الحد العادي (${LOAD_RULES.NORMAL_MAX} وحدة). التسجيل حتى ${LOAD_RULES.EXCELLENCE_MAX} وحدة للمتفوقين فقط (معدل ≥ ${LOAD_RULES.EXCELLENCE_GPA}%). المعدل الحالي: ${gpaNow.toFixed(2)}%`;
       } else if (totalCredits < minLimit && totalCredits > 0) {
         if (student.hasDeptApproval) {
           bar.style.background = "#9333ea";
@@ -1686,7 +1711,7 @@
       } else if (excellent && totalCredits > LOAD_RULES.NORMAL_MAX) {
         bar.style.background = "#3b82f6";
         alert.style.color = "#1d4ed8";
-        alert.innerHTML = `✅ ${totalCredits} وحدة — ضمن حد المتفوقين (${LOAD_RULES.EXCELLENCE_MAX} وحدة). المعدل: ${gpaNow.toFixed(2)}`;
+        alert.innerHTML = `✅ ${totalCredits} وحدة — ضمن حد المتفوقين (${LOAD_RULES.EXCELLENCE_MAX} وحدة). المعدل: ${gpaNow.toFixed(2)}%`;
       } else {
         bar.style.background = "#10b981";
         alert.style.color = "#15803d";
@@ -1716,18 +1741,18 @@
           return showError(`⛔ حظر التنزيل: الإجمالي سيبلغ ${afterTotal} وحدة ويتجاوز الحد الأقصى المطلق (${LOAD_RULES.EXCELLENCE_MAX} وحدة) لأي طالب.`);
         }
         if (afterTotal > maxLimit) {
-          return showError(`⛔ حظر التنزيل: الإجمالي سيبلغ ${afterTotal} وحدة ويتجاوز الحد العادي (${LOAD_RULES.NORMAL_MAX} وحدة). التسجيل حتى ${LOAD_RULES.EXCELLENCE_MAX} وحدة متاح للمتفوقين فقط (معدل ≥ ${LOAD_RULES.EXCELLENCE_GPA.toFixed(2)} أي 75%). معدل الطالب: ${gpaNow.toFixed(2)}`);
+          return showError(`⛔ حظر التنزيل: الإجمالي سيبلغ ${afterTotal} وحدة ويتجاوز الحد العادي (${LOAD_RULES.NORMAL_MAX} وحدة). التسجيل حتى ${LOAD_RULES.EXCELLENCE_MAX} وحدة متاح للمتفوقين فقط (معدل ≥ ${LOAD_RULES.EXCELLENCE_GPA}%). معدل الطالب: ${gpaNow.toFixed(2)}%`);
         }
       }
 
-      // تسلسل الفصول: يمنع القفز لفصل متقدم قبل إنجاز 70% من الفصل الذي يسبقه مباشرة
+      // تسلسل المستويات: يمنع القفز لمستوى متقدم (كل مستوى = فصلان) قبل إنجاز 70% من المستوى الذي يسبقه
       if (!student.hasDeptApproval && typeof course.semester === 'number' && course.semester > 0) {
-        const seq = checkSemesterSequence(student, course.semester);
+        const seq = checkLevelSequence(student, course.semester);
         if (!seq.ok) {
           return showError(
-            `⛔ حظر التنزيل: لم يُنجز ${seq.neededPct}% من وحدات ${seq.prevSemName} بعد ` +
+            `⛔ حظر التنزيل: لم يُنجز ${seq.neededPct}% من وحدات ${seq.prevLevelName} بعد ` +
             `(المُنجز حالياً ${seq.havePct}%: ${seq.done} من ${seq.prevTotal} وحدة). ` +
-            `يلزم إنجاز هذه النسبة قبل تسجيل مقررات ${seq.curSemName}.`
+            `يلزم إنجاز هذه النسبة قبل تسجيل مقررات ${seq.curLevelName}.`
           );
         }
       }
@@ -1950,8 +1975,7 @@
         <div class="footer-summary">
           <span>إجمالي الوحدات المنجزة: ${cumCredits}</span>
           <span>إجمالي النقاط: ${cumPoints.toFixed(2)}</span>
-          <span>المعدل التراكمي (GPA): ${finalGpa.toFixed(2)}</span>
-          <span>النسبة: ${((finalGpa/4)*100).toFixed(1)}%</span>
+          <span>المعدل التراكمي: ${finalGpa.toFixed(2)}%</span>
         </div>
         <div class="sign">
           <span>المشرف الأكاديمي: ${currentAdvisor}</span>
@@ -1999,7 +2023,7 @@
         s.gpa = r.gpa;
         s.passedHours = Math.min(r.totalCredits, 157);
         s.level = calculateAutomaticLevel(s.passedHours);
-        s.status = s.gpa < 2.00 ? 'متعثر' : 'منتظم';
+        s.status = isAtRiskGpa(s.gpa) ? 'متعثر' : 'منتظم';
         report.push({ id: s.id, name: s.name, before, after: s.gpa,
           changed: Math.abs(before - s.gpa) > 0.001, maxLoad: getMaxLoad(s.gpa) });
       });
@@ -2013,7 +2037,7 @@
         else {
           msg += `تغيّر معدل ${changed.length} طالب:\n\n`;
           changed.slice(0, 15).forEach(r => {
-            msg += `• ${r.name} (${r.id}): ${r.before.toFixed(2)} ← ${r.after.toFixed(2)} ${r.after > r.before ? '↑' : '↓'}  |  حد التسجيل: ${r.maxLoad} وحدة\n`;
+            msg += `• ${r.name} (${r.id}): ${r.before.toFixed(2)}% ← ${r.after.toFixed(2)}% ${r.after > r.before ? '↑' : '↓'}  |  حد التسجيل: ${r.maxLoad} وحدة\n`;
           });
           if (changed.length > 15) msg += `\n... و${changed.length - 15} طالباً آخر.`;
         }
@@ -2023,7 +2047,7 @@
     }
 
     function confirmRecalcAll() {
-      if (confirm('سيُعاد احتساب معدلات جميع الطلاب وفق مقياس اللائحة (11 تقديراً، سقف 4.00).\n\nقد تتغيّر بعض المعدلات المحفوظة وسترفع النتائج إلى قاعدة البيانات.\n\nهل ترغب بالمتابعة؟')) {
+      if (confirm('سيُعاد احتساب معدلات جميع الطلاب وفق النظام الرسمي (النقاط = الدرجة × الوحدات، والمعدل نسبة مئوية 0-100).\n\nقد تتغيّر بعض المعدلات المحفوظة وسترفع النتائج إلى قاعدة البيانات.\n\nهل ترغب بالمتابعة؟')) {
         recalcAllStudents(false);
       }
     }
